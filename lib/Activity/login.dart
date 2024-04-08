@@ -56,17 +56,7 @@ class LoginPage extends StatelessWidget {
                     ))
                   ],
                 ),
-                Row(
-                  children: [
-                    Expanded(flex: 1, child: SizedBox()),
-                    Expanded(
-                        flex: 9,
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text("Username"),
-                        )),
-                  ],
-                ),
+
                 Row(
                   children: [
                     Expanded( child: SizedBox()),
@@ -79,7 +69,7 @@ class LoginPage extends StatelessWidget {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            hintText: 'Username'
+                            label: Text("Username")
                           ),
                         ),
                       ),
@@ -87,18 +77,7 @@ class LoginPage extends StatelessWidget {
                     Expanded( child: SizedBox()),
                   ],
                 ),
-                Row(
-                  children: [
-                    Expanded(flex: 1, child: SizedBox()),
-                    Expanded(
-                      flex: 9,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text("Password"),
-                      ),
-                    ),
-                  ],
-                ),
+              SizedBox(height: 15),
                 Row(
                   children: [
                     Expanded( child: SizedBox()),
@@ -112,7 +91,7 @@ class LoginPage extends StatelessWidget {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            hintText: 'Password'
+                            label: Text('Password'),                      
                           ),
                         ),
                       ),

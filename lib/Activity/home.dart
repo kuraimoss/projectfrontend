@@ -71,25 +71,26 @@ class Myhome extends StatelessWidget {
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(
-          flex: 5,
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => LoginPage()),
-                );
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue),
-                shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
-              ),
-              child: Text('Login',style: TextStyle(color: Colors.white),),
-            ),
-          ),
-        ),
+       Expanded(
+  flex: 5,
+  child: Padding(
+    padding: const EdgeInsets.all(15.0),
+    child: ElevatedButton(
+      onPressed: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => LoginPage()),
+        );
+      },
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.blue),
+        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
+      ),
+      child: Text('Login', style: TextStyle(color: Colors.white)),
+    ),
+  ),
+),
+
         Expanded(child: SizedBox()),
         Expanded(
           flex: 5,
