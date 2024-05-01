@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kelompok/Activity/daftar.dart';
 import 'package:kelompok/Activity/dashboard.dart';
-import 'package:kelompok/Activity/fail.dart';
 import 'package:kelompok/Activity/resetpw.dart';
 
 class LoginPage extends StatelessWidget {
