@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kelompok/Activity/daftar.dart';
+import 'package:kelompok/Activity/dashboard.dart';
+import 'package:kelompok/Activity/fail.dart';
 import 'package:kelompok/Activity/resetpw.dart';
 
 class LoginPage extends StatelessWidget {
@@ -110,7 +112,12 @@ class LoginPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
-                          onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (_) => myHome()),
+                        );
+                      },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
