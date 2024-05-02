@@ -16,9 +16,6 @@ class Myhome extends StatelessWidget {
     final double imageHeight = imageWidth / aspectRatio;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(''),
-      ),
       body: Padding(
         padding: EdgeInsets.all(15.0),
         child: Center(
@@ -80,7 +77,6 @@ class Myhome extends StatelessWidget {
                         );
                       },
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.blue),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0))),
                       ),
@@ -102,7 +98,6 @@ class Myhome extends StatelessWidget {
                         );
                       },
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.blue),
                         shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0))),
                       ),

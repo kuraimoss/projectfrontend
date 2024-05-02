@@ -35,7 +35,7 @@ class _myHomeState extends State<myHome> {
                 duration: Duration(milliseconds: 500), curve: Curves.ease);
           },
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.image), label: "Gallery"),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             
             BottomNavigationBarItem(
                 icon: Icon(Icons.bubble_chart), label: "Chat"),

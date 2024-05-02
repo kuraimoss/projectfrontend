@@ -1,70 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:kelompok/Activity/login.dart';
 
-class DaftarPage extends StatelessWidget {
-  const DaftarPage({super.key});
+class CreateNewPasswordScreen extends StatefulWidget {
+  const CreateNewPasswordScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CreateNewPasswordScreen> createState() => _CreateNewPasswordScreenState();
+}
+
+class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
+  final _oldPasswordController = TextEditingController();
+  final _newPasswordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
+  String _errorMessage = '';
+
+  void _savePassword() {
+    final String newPassword = _newPasswordController.text;
+    final String confirmPassword = _confirmPasswordController.text;
+
+    if (newPassword != confirmPassword) {
+      setState(() {
+        _errorMessage = 'Passwords do not match.';
+      });
+    } else {
+      // Passwords match, proceed with saving
+      // Add your saving logic here
+
+      // After saving, navigate to login screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double imageWidth =
-        screenWidth * 0.6; // Misalnya, 60% dari lebar layar
-    final double aspectRatio =
-        16 / 9; // Sesuaikan aspek rasio gambar sesuai kebutuhan
-    final double imageHeight = imageWidth / aspectRatio;
-
     return Scaffold(
-      appBar: AppBar(),
       body: Padding(
-        padding: EdgeInsets.all(5.0),
-        child: Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Container(
-              width: imageWidth,
-              height: imageHeight,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/logo.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.lock,
+              size: 80.0,
+              color: Color(0xFF468a55),
             ),
-            Row(
-              children: [
-                Expanded(
-                    child: Text(
-                  "Create new Account",
-                  style: GoogleFonts.openSans(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 30,
-                  ),
-                  textAlign: TextAlign.center,
-                ))
-              ],
+            SizedBox(height: 16.0),
+            Text(
+              'Your New Password Must Be Different\nfrom Previously Used Password.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16.0),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Already Registered?'),
-                SizedBox(width: 5),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => LoginPage()),
-                    );
-                  },
-                  child: Text(
-                    'Log in here.',
-                    style: TextStyle(
-                      color: Color(0xFF468a55),
-                      decoration: TextDecoration.none,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            SizedBox(height: 16.0),
             Row(
               children: [
                 Expanded(child: SizedBox()),
@@ -73,57 +63,20 @@ class DaftarPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: TextField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          label: Text('Username')),
-                    ),
-                  ),
-                ),
-                Expanded(child: SizedBox()),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(child: SizedBox()),
-                Expanded(
-                  flex: 10,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          label: Text('Email')),
-                    ),
-                  ),
-                ),
-                Expanded(child: SizedBox()),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(child: SizedBox()),
-                Expanded(
-                  flex: 10,
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: TextField(
+                      controller: _oldPasswordController,
                       obscureText: true,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
                           ),
-                          label: Text('Password')),
+                          labelText: 'Old Password'),
                     ),
                   ),
                 ),
                 Expanded(child: SizedBox()),
               ],
             ),
+            SizedBox(height: 16.0),
             Row(
               children: [
                 Expanded(child: SizedBox()),
@@ -132,18 +85,47 @@ class DaftarPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: TextField(
+                      controller: _newPasswordController,
                       obscureText: true,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
                           ),
-                          label: Text('Retype Password')),
+                          labelText: 'New Password'),
                     ),
                   ),
                 ),
                 Expanded(child: SizedBox()),
               ],
             ),
+            SizedBox(height: 16.0),
+            Row(
+              children: [
+                Expanded(child: SizedBox()),
+                Expanded(
+                  flex: 10,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: TextField(
+                      controller: _confirmPasswordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          labelText: 'Confirm Password'),
+                    ),
+                  ),
+                ),
+                Expanded(child: SizedBox()),
+              ],
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              _errorMessage,
+              style: TextStyle(color: Colors.red),
+            ),
+            SizedBox(height: 16.0),
             Row(
               children: [
                 Expanded(
@@ -154,7 +136,7 @@ class DaftarPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: _savePassword,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -162,7 +144,7 @@ class DaftarPage extends StatelessWidget {
                         padding: EdgeInsets.all(15.0),
                       ),
                       child: Text(
-                        'Register',
+                        'Save',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -173,7 +155,7 @@ class DaftarPage extends StatelessWidget {
                 ),
               ],
             ),
-          ]),
+          ],
         ),
       ),
     );
