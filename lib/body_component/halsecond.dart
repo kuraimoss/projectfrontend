@@ -164,7 +164,7 @@ class _HalSecondState extends State<HalSecond> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+         
                   ),
                 ),
               ),
@@ -296,13 +296,7 @@ class _HalSecondState extends State<HalSecond> {
             ),
           ),
           SizedBox(height: 15),
-          Container(
-            height: 10,
-            decoration: BoxDecoration(
-              color: Color(0xFFf2eded),
-            ),
-          ),
-          SizedBox(height: 15),
+
           Container(
             height: 100,
             width: 350,

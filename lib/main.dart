@@ -20,11 +20,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      theme: ThemeData(
+    return MaterialApp(
+        theme: ThemeData.light().copyWith(
           useMaterial3: false,
-          colorScheme: ColorScheme.light(primary: Color(0xFF468a55))),
-      home: Myhome()
-    );
+          colorScheme: ColorScheme.light().copyWith(primary: Color(0xFF468a55)),
+        ),
+        darkTheme: ThemeData.dark().copyWith(
+          colorScheme: ColorScheme.dark().copyWith(primary: Color(0xFF468a55)),
+        ),
+        themeMode: Provider.of<myProv>(context).isDarkMode
+            ? ThemeMode.dark
+            : ThemeMode.light,
+        home: Myhome());
   }
 }
