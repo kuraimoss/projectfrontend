@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
+  image_picker: ^1.1.1
   provider: ^6.1.2
 
 dev_dependencies:
@@ -29,7 +30,3 @@ flutter:
     - assets/home1.jpg
     - assets/home2.jpg
     - assets/home3.jpg
-
-
-
-

@@ -1,10 +1,12 @@
-// MyProfile.dart
 import 'package:flutter/material.dart';
 import 'package:kelompok/Provider/provider.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class MyProfile extends StatelessWidget {
   @override
+  File? _image;
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -25,59 +27,27 @@ class MyProfile extends StatelessWidget {
                 SizedBox(height: 20),
                 CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage(
-                      'assets/profil.jpg'), // Replace 'assets/profile_photo.jpg' with your actual image path
+                  backgroundImage: _image != null
+                      ? FileImage(_image!)
+                      : AssetImage('assets/profil.jpg')
+                          as ImageProvider<Object>?,
                 ),
                 SizedBox(height: 20),
-                buildField(
-                  'Name',
-                  profileProvider.name,
-                  () => _showEditDialog(
-                    context,
-                    profileProvider,
-                    'Name',
-                    profileProvider.name,
-                    (String newName) {
-                      profileProvider.updateName(newName);
-                    },
-                  ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EditProfile()),
+                    );
+                  },
+                  icon: Icon(Icons.edit_outlined, size: 18),
+                  label: Text('Edit Profile'),
                 ),
-                SizedBox(height: 20),
-                buildField(
-                  'Email',
-                  profileProvider.email,
-                  () => _showVerifyEmailDialog(
-                    context,
-                    profileProvider,
-                  ),
-                ),
-                SizedBox(height: 20),
-                buildField(
-                  'Phone Number',
-                  profileProvider.phoneNumber,
-                  () => _showVerifyNumberDialog(
-                    context,
-                    profileProvider,
-                  ),
-                ),
-                SizedBox(height: 20),
-                buildDateField(
-                  'Birth Date',
-                  profileProvider.birthDate,
-                  () => _showDatePicker(
-                    context,
-                    profileProvider,
-                  ),
-                ),
-                SizedBox(height: 20),
-                buildField(
-                  'Jenis Kelamin',
-                  profileProvider.gender,
-                  () => _showEditGenderDialog(
-                    context,
-                    profileProvider,
-                  ),
-                ),
+                buildField('Name', profileProvider.name),
+                buildField('Email', profileProvider.email),
+                buildField('Phone Number', profileProvider.phoneNumber),
+                buildDateField('Birth Date', profileProvider.birthDate),
+                buildField('Jenis Kelamin', profileProvider.gender),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -132,11 +102,7 @@ class MyProfile extends StatelessWidget {
     );
   }
 
-  Widget buildField(
-    String label,
-    String value,
-    VoidCallback onTap,
-  ) {
+  Widget buildField(String label, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -153,10 +119,6 @@ class MyProfile extends StatelessWidget {
                 labelText: label,
                 labelStyle: TextStyle(color: Colors.grey),
                 contentPadding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.edit_outlined),
-                  onPressed: onTap,
-                ),
               ),
               style: TextStyle(fontSize: 16),
             ),
@@ -166,11 +128,7 @@ class MyProfile extends StatelessWidget {
     );
   }
 
-  Widget buildDateField(
-    String label,
-    DateTime value,
-    VoidCallback onTap,
-  ) {
+  Widget buildDateField(String label, DateTime value) {
     final formattedDate = '${value.day}/${value.month}/${value.year}';
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -188,10 +146,6 @@ class MyProfile extends StatelessWidget {
                 labelText: label,
                 labelStyle: TextStyle(color: Colors.grey),
                 contentPadding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.edit_calendar_outlined),
-                  onPressed: onTap,
-                ),
               ),
               style: TextStyle(fontSize: 16),
             ),
@@ -200,260 +154,180 @@ class MyProfile extends StatelessWidget {
       ],
     );
   }
+}
 
-  void _showEditDialog(
-    BuildContext context,
-    myProv profileProvider,
-    String title,
-    String currentValue,
-    Function(String) onSave,
-  ) {
-    String newValue = currentValue;
+class EditProfile extends StatefulWidget {
+  @override
+  _EditProfileState createState() => _EditProfileState();
+}
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Edit $title'),
-          content: TextField(
-            onChanged: (value) {
-              newValue = value;
-            },
-            decoration: InputDecoration(hintText: 'Enter new $title'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                onSave(newValue);
-                Navigator.pop(context);
-              },
-              child: Text('Save'),
-            ),
-          ],
-        );
-      },
-    );
+class _EditProfileState extends State<EditProfile> {
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _phoneNumberController = TextEditingController();
+  String _selectedGender = '';
+  DateTime _selectedDate = DateTime.now();
+  File? _image; // Variable to store selected image
+
+  @override
+  void initState() {
+    super.initState();
+    final profileProvider = Provider.of<myProv>(context, listen: false);
+    _nameController.text = profileProvider.name;
+    _emailController.text = profileProvider.email;
+    _phoneNumberController.text = profileProvider.phoneNumber;
+    _selectedGender = profileProvider.gender;
+    _selectedDate = profileProvider.birthDate;
   }
 
-  void _showDatePicker(BuildContext context, myProv profileProvider) async {
-    final selectedDate = await showDatePicker(
-      context: context,
-      initialDate: profileProvider.birthDate,
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
+  @override
+  Widget build(BuildContext context) {
+    final profileProvider = Provider.of<myProv>(context,
+        listen: false); // Deklarasikan di dalam build
 
-    if (selectedDate != null) {
-      profileProvider.updateBirthDate(selectedDate);
-    }
-  }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Profile'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 50,
+                  backgroundImage: _image != null
+                      ? FileImage(_image!)
+                      : AssetImage('assets/profil.jpg')
+                          as ImageProvider<Object>?,
+                ),
+                SizedBox(width: 20),
+                Expanded(
+  child: InkWell(
+    onTap: _getImage,
+    child: Row(
+      children: [
+        Icon(Icons.camera_alt), // Tambahkan ikon di sini
+        SizedBox(width: 10), // Beri jarak antara ikon dan teks
+        Text(
+          'Change Profile Picture',
+        ),
+      ],
+    ),
+  ),
+),
 
-  void _showVerifyEmailDialog(BuildContext context, myProv profileProvider) {
-    String newEmail = profileProvider.email;
+              ],
+            ),
+            SizedBox(height: 20),
+            TextFormField(
+              controller: _nameController,
+              decoration: InputDecoration(labelText: 'Name'),
+            ),
+            TextFormField(
+              controller: _emailController,
+              decoration: InputDecoration(labelText: 'Email'),
+            ),
+            TextFormField(
+              controller: _phoneNumberController,
+              decoration: InputDecoration(labelText: 'Phone Number'),
+            ),
+            DropdownButtonFormField<String>(
+              value: _selectedGender,
+              onChanged: (value) {
+                setState(() {
+                  _selectedGender = value!;
+                });
+              },
+              items: ['Male', 'Female']
+                  .map((gender) => DropdownMenuItem(
+                        value: gender,
+                        child: Text(gender),
+                      ))
+                  .toList(),
+              decoration: InputDecoration(labelText: 'Gender'),
+            ),
+            InkWell(
+              onTap: () async {
+                final selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: _selectedDate,
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime.now(),
+                );
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(
-              'Enter the verification code sent to your current email: $newEmail'),
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(
-              4,
-              (index) => SizedBox(
-                width: 50,
-                child: TextField(
-                  maxLength: 1,
-                  textAlign: TextAlign.center,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    counterText: '',
-                    border: OutlineInputBorder(),
-                  ),
+                if (selectedDate != null) {
+                  setState(() {
+                    _selectedDate = selectedDate;
+                  });
+                }
+              },
+              child: InputDecorator(
+                decoration: InputDecoration(
+                  labelText: 'Birth Date',
+                  border: UnderlineInputBorder(),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
+                    ),
+                    Icon(Icons.edit_calendar_outlined),
+                  ],
                 ),
               ),
             ),
-          ),
-          actions: [
-            TextButton(
+            SizedBox(height: 20),
+            ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                _showEditNewEmailDialog(context, profileProvider);
-              },
-              child: Text('Verify'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showVerifyNumberDialog(BuildContext context, myProv profileProvider) {
-    String phoneNumber = profileProvider.phoneNumber;
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(
-              'Enter the verification code sent to your current phone number: $phoneNumber'),
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(
-              4,
-              (index) => SizedBox(
-                width: 50,
-                child: TextField(
-                  maxLength: 1,
-                  textAlign: TextAlign.center,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    counterText: '',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                _showEditNewNumberDialog(context, profileProvider);
-              },
-              child: Text('Verify'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showEditGenderDialog(BuildContext context, myProv profileProvider) {
-    String newGender = profileProvider.gender;
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Edit Gender'),
-          content: DropdownButtonFormField<String>(
-            value: newGender,
-            onChanged: (value) {
-              newGender = value!;
-            },
-            items: ['Male', 'Female']
-                .map((gender) => DropdownMenuItem(
-                      value: gender,
-                      child: Text(gender),
-                    ))
-                .toList(),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                profileProvider.updateGender(newGender);
+                profileProvider.updateName(_nameController.text);
+                profileProvider.updateEmail(_emailController.text);
+                profileProvider.updatePhoneNumber(_phoneNumberController.text);
+                profileProvider.updateGender(_selectedGender);
+                profileProvider.updateBirthDate(_selectedDate);
+                // Tambahkan pembaruan path gambar profil jika diperlukan
+                if (_image != null) {
+                  profileProvider.updateProfileImagePath(_image!.path);
+                }
                 Navigator.pop(context);
               },
               child: Text('Save'),
             ),
           ],
-        );
-      },
+        ),
+      ),
     );
   }
 
-  void _showEditNewEmailDialog(BuildContext context, myProv profileProvider) {
-    String newEmail = profileProvider.email;
+  Future<void> _getImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Edit Email'),
-          content: TextField(
-            onChanged: (value) {
-              newEmail = value;
-            },
-            decoration: InputDecoration(hintText: 'Enter your new email'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                profileProvider.updateEmail(newEmail);
-                Navigator.pop(context);
-              },
-              child: Text('Save'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
 
-  void _showEditNewNumberDialog(BuildContext context, myProv profileProvider) {
-    String phoneNumber = profileProvider.phoneNumber;
+        // Perbarui path gambar profil di provider nya
+        final profileProvider = Provider.of<myProv>(context, listen: false);
+        profileProvider.updateProfileImagePath(pickedFile.path);
+      } else {
+        // Jika pengguna tidak memilih gambar, gunakan gambar profil default dari provider
+        final profileProvider = Provider.of<myProv>(context, listen: false);
+        String defaultImagePath = profileProvider.profileImagePath;
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Edit Phone Number'),
-          content: TextField(
-            onChanged: (value) {
-              phoneNumber = value;
-            },
-            decoration:
-                InputDecoration(hintText: 'Enter your new phone number'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                profileProvider.updatePhoneNumber(phoneNumber);
-                Navigator.pop(context);
-              },
-              child: Text('Save'),
-            ),
-          ],
-        );
-      },
-    );
+        if (defaultImagePath == 'assets/profil.jpg' ||
+            defaultImagePath.isEmpty) {
+          // Jika path gambar profil default tidak diatur atau kosong, gunakan gambar default bawaan aplikasi
+          _image = null; // Atur gambar menjadi null
+        } else {
+          // Jika path gambar profil default tersedia di provider, gunakan itu
+          _image = File(defaultImagePath);
+        }
+      }
+    });
   }
 }

@@ -1,4 +1,3 @@
-// myProv.dart
 import 'package:flutter/material.dart';
 
 class myProv extends ChangeNotifier {
@@ -8,11 +7,12 @@ class myProv extends ChangeNotifier {
   String _phoneNumber = '123456789'; // Default phone number
   DateTime _birthDate = DateTime(2000, 1, 1); // Default birth date
   String _gender = 'Male'; // Default gender
-
-  int get bnIndex => _BNindex;
+  String _profileImagePath = 'assets/profil.jpg'; // Default profile image path
   bool _isDarkMode = false; // Default dark mode status
 
+  int get bnIndex => _BNindex;
   bool get isDarkMode => _isDarkMode;
+
   set bnIndex(int val) {
     _BNindex = val;
     notifyListeners();
@@ -52,9 +52,16 @@ class myProv extends ChangeNotifier {
     _gender = newGender;
     notifyListeners();
   }
-    void toggleDarkMode() {
+
+  String get profileImagePath => _profileImagePath;
+
+  void updateProfileImagePath(String imagePath) {
+    _profileImagePath = imagePath;
+    notifyListeners();
+  }
+
+  void toggleDarkMode() {
     _isDarkMode = !_isDarkMode;
     notifyListeners();
   }
 }
-
