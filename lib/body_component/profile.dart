@@ -4,9 +4,15 @@ import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class MyProfile extends StatelessWidget {
+class MyProfile extends StatefulWidget {
   @override
+  State<MyProfile> createState() => _MyProfileState();
+}
+
+class _MyProfileState extends State<MyProfile> {
   File? _image;
+  @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
