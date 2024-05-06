@@ -21,7 +21,7 @@ class NotifikasiPage extends StatelessWidget {
                 },
               ),
               Text(
-                'INBOX',
+                'Notification',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18.0,
@@ -39,7 +39,6 @@ class NotifikasiPage extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 // Contoh data pesan
                 String sender = index.isEven ? 'John' : 'Jane';
-                String message = 'Hello, this is message number $index';
                 bool isMe = index.isEven; // Jika pesan dari saya
 
                 return ListTile(
