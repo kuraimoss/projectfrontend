@@ -21,7 +21,7 @@ class NotifikasiPage extends StatelessWidget {
                 },
               ),
               Text(
-                'Notification',
+                'Notif',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18.0,

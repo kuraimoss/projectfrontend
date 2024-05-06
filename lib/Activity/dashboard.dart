@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kelompok/Provider/provider.dart';
 import 'package:kelompok/body_component/halsecond.dart';
 import 'package:kelompok/body_component/menu.dart';
-import 'package:kelompok/body_component/message.dart';
 import 'package:kelompok/body_component/profile.dart';
 
 import 'package:provider/provider.dart';
@@ -15,7 +14,7 @@ class myHome extends StatefulWidget {
 }
 
 class _myHomeState extends State<myHome> {
-  List<Widget> _body = [HalSecond(),MyMenu(), MyListChat(),  MyProfile()];
+  List<Widget> _body = [HalSecond(),MyMenu(), MyMenu(),  MyProfile()];
 
   @override
   Widget build(BuildContext context) {
