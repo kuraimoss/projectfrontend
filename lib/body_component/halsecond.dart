@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kelompok/Content/message.dart';
 
 class HalSecond extends StatefulWidget {
   const HalSecond({Key? key}) : super(key: key);
@@ -70,13 +71,22 @@ class _HalSecondState extends State<HalSecond> {
               Positioned(
                 right: 20.0,
                 bottom: 100.0,
-                child: ClipOval(
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    child: Image.asset(
-                      'assets/lonceng.png',
-                      fit: BoxFit.cover,
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigasi ke halaman notifikasi
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NotifikasiPage()),
+                    );
+                  },
+                  child: ClipOval(
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      child: Image.asset(
+                        'assets/lonceng.png',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -164,7 +174,6 @@ class _HalSecondState extends State<HalSecond> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-         
                   ),
                 ),
               ),
@@ -296,7 +305,6 @@ class _HalSecondState extends State<HalSecond> {
             ),
           ),
           SizedBox(height: 15),
-
           Container(
             height: 100,
             width: 350,
@@ -375,7 +383,6 @@ class _HalSecondState extends State<HalSecond> {
                     ),
                   ),
                 ),
-            
               ],
             ),
           ),

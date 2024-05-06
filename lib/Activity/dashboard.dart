@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kelompok/Provider/provider.dart';
 import 'package:kelompok/body_component/halsecond.dart';
+import 'package:kelompok/body_component/menu.dart';
 import 'package:kelompok/body_component/message.dart';
 import 'package:kelompok/body_component/profile.dart';
-import 'package:kelompok/body_component/random.dart';
+
 import 'package:provider/provider.dart';
 
 class myHome extends StatefulWidget {
@@ -14,7 +15,7 @@ class myHome extends StatefulWidget {
 }
 
 class _myHomeState extends State<myHome> {
-  List<Widget> _body = [HalSecond(), MyListChat(), MyTask(), MyProfile()];
+  List<Widget> _body = [HalSecond(),MyMenu(), MyListChat(),  MyProfile()];
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class _myHomeState extends State<myHome> {
         },
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.feed), label: "Menu"),
+          BottomNavigationBarItem(icon: Icon(Icons.restaurant_menu), label: "Menu"),
           BottomNavigationBarItem(
               icon: Icon(Icons.date_range_sharp), label: "Pesanan"),
           BottomNavigationBarItem(icon: Icon(Icons.person_2), label: "Profile"),
