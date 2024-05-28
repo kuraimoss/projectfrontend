@@ -12,7 +12,6 @@ class MyProfile extends StatefulWidget {
 class _MyProfileState extends State<MyProfile> {
   File? _image;
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -211,20 +210,19 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 SizedBox(width: 20),
                 Expanded(
-  child: InkWell(
-    onTap: _getImage,
-    child: Row(
-      children: [
-        Icon(Icons.camera_alt), // Tambahkan ikon di sini
-        SizedBox(width: 10), // Beri jarak antara ikon dan teks
-        Text(
-          'Change Profile Picture',
-        ),
-      ],
-    ),
-  ),
-),
-
+                  child: InkWell(
+                    onTap: _getImage,
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera_alt), // Tambahkan ikon di sini
+                        SizedBox(width: 10), // Beri jarak antara ikon dan teks
+                        Text(
+                          'Change Profile Picture',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 20),
@@ -298,6 +296,13 @@ class _EditProfileState extends State<EditProfile> {
                 if (_image != null) {
                   profileProvider.updateProfileImagePath(_image!.path);
                 }
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Your profile has been successfully edited'),
+                    duration: Duration(seconds: 2),
+                    backgroundColor: Color(0xFF107d72)
+                  ),
+                );
                 Navigator.pop(context);
               },
               child: Text('Save'),

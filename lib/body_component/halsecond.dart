@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kelompok/Content/message.dart';
+import 'package:kelompok/Content/packagefab.dart';
 
 class HalSecond extends StatefulWidget {
   const HalSecond({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _HalSecondState extends State<HalSecond> {
 
   final PageController _pageController = PageController();
   int _currentPage = 0;
-
+  double _fabPosition = 10.0; // Inisialisasi posisi FAB
   @override
   void initState() {
     super.initState();
@@ -123,7 +124,7 @@ class _HalSecondState extends State<HalSecond> {
                           color: Color(0xFF08611b),
                         ),
                       ),
-                      SizedBox(width: 170),
+                      SizedBox(width: 140),
                       Image.asset(
                         'assets/koin.png',
                         width: 55,
@@ -387,6 +388,41 @@ class _HalSecondState extends State<HalSecond> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: GestureDetector(
+        onVerticalDragUpdate: (details) {
+          setState(() {
+            _fabPosition -= details.delta.dy;
+            _fabPosition = _fabPosition.clamp(
+                20.0, MediaQuery.of(context).size.height - 140.0);
+          });
+        },
+        child: Stack(
+          alignment: Alignment.bottomRight,
+          children: [
+            Positioned(
+              bottom: _fabPosition,
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => packageFab(),
+                    ),
+                  );
+                },
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                child: ClipRRect(
+                  // Menggunakan ClipRRect untuk membuat gambar rounded
+                  borderRadius: BorderRadius.circular(
+                      12), // Ubah nilai sesuai dengan keinginan Anda
+                  child: Image.asset('assets/fab.jpg', width: 300, height: 300),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

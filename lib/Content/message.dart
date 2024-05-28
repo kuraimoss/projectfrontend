@@ -9,7 +9,7 @@ class NotifikasiPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: 8.0),
+          SizedBox(height: 40.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -88,6 +88,32 @@ class NotifikasiPage extends StatelessWidget {
                   onTap: () {
                     // Aksi saat pesan ditekan
                     print('Pesan dari $sender ditekan');
+                    // Menampilkan dialog konfirmasi saat pesan ditekan
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Delete Message'),
+                          content:
+                              Text('Are you sure you want to delete this message?'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(false);
+                              },
+                              child: Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+  
+                                Navigator.of(context).pop(true);
+                              },
+                              child: Text('Delete'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                   selected: isMe, // Pesan dari saya ditandai
                 );

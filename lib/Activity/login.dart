@@ -145,7 +145,7 @@ class LoginPage extends StatelessWidget {
                       child: Text(
                         'Forgot password?',
                         style: TextStyle(
-                          color: Color(0xFF468a55),
+                          color: Color(0xFF107d72),
                           decoration: TextDecoration.none,
                         ),
                       ),
@@ -166,7 +166,7 @@ class LoginPage extends StatelessWidget {
                       child: Text(
                         'Register',
                         style: TextStyle(
-                          color: Color(0xFF468a55),
+                          color: Color(0xFF107d72),
                           decoration: TextDecoration.none,
                         ),
                       ),

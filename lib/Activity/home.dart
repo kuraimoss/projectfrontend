@@ -10,10 +10,9 @@ class Myhome extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double imageWidth =
-        screenWidth * 0.8; // Misalnya, 60% dari lebar layar
+        screenWidth * 0.9; // Misalnya, 60% dari lebar layar
     final double aspectRatio =
         16 / 9; // Sesuaikan aspek rasio gambar sesuai kebutuhan
-    final double imageHeight = imageWidth / aspectRatio;
 
     return Scaffold(
       body: Padding(
@@ -22,7 +21,7 @@ class Myhome extends StatelessWidget {
           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
             Container(
               width: imageWidth,
-              height: imageHeight,
+              height: 250,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/logo.png'),

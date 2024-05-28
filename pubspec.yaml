@@ -11,13 +11,20 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
+  gpt_draggable_fab: ^0.0.2
   image_picker: ^1.1.1
   provider: ^6.1.2
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.9.2
   flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo.png"
 
 flutter:
   uses-material-design: true
@@ -31,4 +38,5 @@ flutter:
     - assets/home2.jpg
     - assets/home3.jpg
     - assets/machiato.jpg
+    - assets/fab.jpg
 

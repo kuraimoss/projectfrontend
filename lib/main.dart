@@ -25,10 +25,10 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
         theme: ThemeData.light().copyWith(
           useMaterial3: false,
-          colorScheme: ColorScheme.light().copyWith(primary: Color(0xFF468a55)),
+          colorScheme: ColorScheme.light().copyWith(primary: Color(0xFF107d72)),
         ),
         darkTheme: ThemeData.dark().copyWith(
-          colorScheme: ColorScheme.dark().copyWith(primary: Color(0xFF468a55)),
+          colorScheme: ColorScheme.dark().copyWith(primary: Color(0xFF107d72)),
         ),
         themeMode: Provider.of<myProv>(context).isDarkMode
             ? ThemeMode.dark
