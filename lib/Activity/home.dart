@@ -11,9 +11,6 @@ class Myhome extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double imageWidth =
         screenWidth * 0.9; // Misalnya, 60% dari lebar layar
-    final double aspectRatio =
-        16 / 9; // Sesuaikan aspek rasio gambar sesuai kebutuhan
-
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(15.0),
