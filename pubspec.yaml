@@ -14,6 +14,7 @@ dependencies:
   gpt_draggable_fab: ^0.0.2
   image_picker: ^1.1.1
   provider: ^6.1.2
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_launcher_icons: ^0.9.2
@@ -39,4 +40,4 @@ flutter:
     - assets/home3.jpg
     - assets/machiato.jpg
     - assets/fab.jpg
-
+    - assets/banner.jpg

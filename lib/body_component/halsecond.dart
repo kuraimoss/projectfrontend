@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kelompok/Content/message.dart';
 import 'package:kelompok/Content/packagefab.dart';
+import 'package:kelompok/Provider/provider.dart';
+import 'package:provider/provider.dart';
 
 class HalSecond extends StatefulWidget {
   const HalSecond({Key? key}) : super(key: key);
@@ -19,7 +21,7 @@ class _HalSecondState extends State<HalSecond> {
 
   final PageController _pageController = PageController();
   int _currentPage = 0;
-  double _fabPosition = 10.0; // Inisialisasi posisi FAB
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +34,8 @@ class _HalSecondState extends State<HalSecond> {
 
   @override
   Widget build(BuildContext context) {
+    var bannerProvider = Provider.of<myProv>(context);
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(150.0),
@@ -139,290 +143,318 @@ class _HalSecondState extends State<HalSecond> {
           ),
         ),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Container(
-            height: 200,
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: imagePaths.length,
-              itemBuilder: (context, index) {
-                return Center(
-                  child: Image.asset(
-                    imagePaths[index],
-                    width: 350,
-                    height: 170,
-                    fit: BoxFit.cover,
-                  ),
-                );
-              },
-              onPageChanged: (int page) {
-                setState(() {
-                  _currentPage = page;
-                });
-              },
-            ),
-          ),
-          _buildPageIndicator(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          Column(
             children: [
-              Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Text(
-                  'Pesan Sekarang',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Container(
+                height: 200,
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: imagePaths.length,
+                  itemBuilder: (context, index) {
+                    return Center(
+                      child: Image.asset(
+                        imagePaths[index],
+                        width: 350,
+                        height: 170,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                  onPageChanged: (int page) {
+                    setState(() {
+                      _currentPage = page;
+                    });
+                  },
                 ),
               ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 100,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFFa1f0b3), Colors.white],
-                        stops: [0.0, 0.6],
-                        begin: Alignment.centerRight,
-                        end: Alignment.centerLeft,
-                      ),
-                      border: Border.all(
-                        color: Color(0xFF107d72),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'Pick Up',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF107d72),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 7,
-                              child: Text(
-                                'Ambil di store tanpa antri',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Icon(Icons.store),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 20),
-                Expanded(
-                  child: Container(
-                    height: 100,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFFffcb8c), Colors.white],
-                        stops: [0.0, 0.6],
-                        begin: Alignment.centerRight,
-                        end: Alignment.centerLeft,
-                      ),
-                      border: Border.all(
-                        color: Color(0xFFc26823),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'Delivery',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFFc26823),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 7,
-                              child: Text(
-                                'Pesanan antar ke lokasimu',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Icon(Icons.motorcycle),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 15),
-          Container(
-            height: 100,
-            width: 350,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(width: 2, color: Color(0xFFc7c7c7)),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Positioned(
-                  left: 10,
-                  bottom: 20,
-                  child: Icon(
-                    Icons.coffee_outlined,
-                    size: 80,
-                    color: Colors.black,
-                  ),
-                ),
-                Positioned(
-                  left: 25,
-                  bottom: 3,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFF107d72),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 8),
+              _buildPageIndicator(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(20.0),
                     child: Text(
-                      '20%',
+                      'Pesan Sekarang',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                ),
-                Positioned(
-                  left: 120,
-                  bottom: 10,
-                  child: Container(
-                    height: 73,
-                    width: 3,
-                    color: Color(0xFFd9d9d9),
-                  ),
-                ),
-                Positioned(
-                  left: 140,
-                  bottom: 50,
-                  child: Text(
-                    'Diskon 50%',
-                    style: TextStyle(
-                      color: Color(0xFF107d72),
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 140,
-                  bottom: 20,
-                  child: Container(
-                    width: 200,
-                    child: Text(
-                      'Yuk, ajak teman kamu\ndownload aplikasi Kura Shop',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 100,
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Color(0xFFa1f0b3), Colors.white],
+                            stops: [0.0, 0.6],
+                            begin: Alignment.centerRight,
+                            end: Alignment.centerLeft,
+                          ),
+                          border: Border.all(
+                            color: Color(0xFF107d72),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Pick Up',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF107d72),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 7,
+                                  child: Text(
+                                    'Ambil di store tanpa antri',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Icon(Icons.store),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: GestureDetector(
-        onVerticalDragUpdate: (details) {
-          setState(() {
-            _fabPosition -= details.delta.dy;
-            _fabPosition = _fabPosition.clamp(
-                20.0, MediaQuery.of(context).size.height - 140.0);
-          });
-        },
-        child: Stack(
-          alignment: Alignment.bottomRight,
-          children: [
-            Positioned(
-              bottom: _fabPosition,
-              child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => packageFab(),
+                    SizedBox(width: 20),
+                    Expanded(
+                      child: Container(
+                        height: 100,
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Color(0xFFffcb8c), Colors.white],
+                            stops: [0.0, 0.6],
+                            begin: Alignment.centerRight,
+                            end: Alignment.centerLeft,
+                          ),
+                          border: Border.all(
+                            color: Color(0xFFc26823),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Delivery',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFc26823),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 7,
+                                  child: Text(
+                                    'Pesanan antar ke lokasimu',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Icon(Icons.delivery_dining),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  );
-                },
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                child: ClipRRect(
-                  // Menggunakan ClipRRect untuk membuat gambar rounded
-                  borderRadius: BorderRadius.circular(
-                      12), // Ubah nilai sesuai dengan keinginan Anda
-                  child: Image.asset('assets/fab.jpg', width: 300, height: 300),
+                  ],
+                ),
+              ),
+              SizedBox(height: 15),
+              Container(
+                height: 100,
+                width: 350,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(width: 2, color: Color(0xFFc7c7c7)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Stack(
+                  alignment: Alignment.centerLeft,
+                  children: [
+                    Positioned(
+                      left: 10,
+                      bottom: 20,
+                      child: Icon(
+                        Icons.coffee_outlined,
+                        size: 80,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Positioned(
+                      left: 25,
+                      bottom: 3,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xFF107d72),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          '20%',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 120,
+                      bottom: 10,
+                      child: Container(
+                        height: 73,
+                        width: 3,
+                        color: Color(0xFFd9d9d9),
+                      ),
+                    ),
+                    Positioned(
+                      left: 140,
+                      bottom: 50,
+                      child: Text(
+                        'Diskon 50%',
+                        style: TextStyle(
+                          color: Color(0xFF107d72),
+                          fontSize: 30,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 140,
+                      bottom: 20,
+                      child: Container(
+                        width: 200,
+                        child: Text(
+                          'Yuk, ajak teman kamu\ndownload aplikasi Kura Shop',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (bannerProvider.isBannerActive)
+            Center(
+              child: Container(
+                width: 300,
+                height: 450,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        'assets/banner.jpg',
+                        fit: BoxFit.cover,
+                        width: 300,
+                        height: 450,
+                      ),
+                    ),
+                    Positioned(
+                      top: 10,
+                      right: 10,
+                      child: GestureDetector(
+                        onTap: () {
+                          bannerProvider.hideBanner();
+                        },
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.black,
+                          size: 24,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 5,
+                      left: 110,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Navigasi ke halaman voucher
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => packageFab()),
+                          );
+                        },
+                        child: Text('GO TO'),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }
@@ -430,21 +462,22 @@ class _HalSecondState extends State<HalSecond> {
   Widget _buildPageIndicator() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
+      children: List<Widget>.generate(
         imagePaths.length,
-        (index) => _buildIndicator(index),
-      ),
-    );
-  }
-
-  Widget _buildIndicator(int index) {
-    return Container(
-      width: 8.0,
-      height: 8.0,
-      margin: EdgeInsets.symmetric(horizontal: 6.0),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: _currentPage == index ? Color(0xFF468a55) : Colors.grey,
+        (int index) {
+          return AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            height: 8,
+            width: (index == _currentPage) ? 24 : 8,
+            margin: EdgeInsets.symmetric(horizontal: 4),
+            decoration: BoxDecoration(
+              color: (index == _currentPage)
+                  ? Color(0xFF08611b)
+                  : Color(0xFF8ca69d),
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+          );
+        },
       ),
     );
   }

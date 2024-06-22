@@ -91,7 +91,7 @@ class _DetailPageState extends State<DetailPage> {
                 Text(
                   'Cappuccino Latte',
                   style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -102,7 +102,7 @@ class _DetailPageState extends State<DetailPage> {
                     child: Text(
                       'Perpaduan arabica coffee dengan susu karamel',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 13,
                         fontWeight: FontWeight.w400,
                         color: Colors.grey,
                       ),
@@ -112,7 +112,7 @@ class _DetailPageState extends State<DetailPage> {
                 Text(
                   'Rp 25.000',
                   style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 20,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -136,7 +136,7 @@ class _DetailPageState extends State<DetailPage> {
                 Text(
                   'Size Cup',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -201,7 +201,7 @@ class _DetailPageState extends State<DetailPage> {
                 Text(
                   'Ice Level',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -291,7 +291,7 @@ class _DetailPageState extends State<DetailPage> {
                 Text(
                   'Syrup',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.w900,
                   ),
                 ),

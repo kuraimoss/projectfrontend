@@ -9,6 +9,9 @@ class myProv extends ChangeNotifier {
   String _gender = 'Male'; // Default gender
   String _profileImagePath = 'assets/profil.jpg'; // Default profile image path
   bool _isDarkMode = false; // Default dark mode status
+  bool _isBannerActive = true;
+
+  bool get isBannerActive => _isBannerActive;
 
   int get bnIndex => _BNindex;
   bool get isDarkMode => _isDarkMode;
@@ -62,6 +65,16 @@ class myProv extends ChangeNotifier {
 
   void toggleDarkMode() {
     _isDarkMode = !_isDarkMode;
+    notifyListeners();
+  }
+
+  void showBanner() {
+    _isBannerActive = true;
+    notifyListeners();
+  }
+
+  void hideBanner() {
+    _isBannerActive = false;
     notifyListeners();
   }
 }

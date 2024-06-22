@@ -5,7 +5,6 @@ import 'package:kelompok/Activity/login.dart';
 
 class Myhome extends StatelessWidget {
   const Myhome({super.key});
-
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
