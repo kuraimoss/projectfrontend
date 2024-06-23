@@ -45,7 +45,7 @@ class _paymentPageState extends State<paymentPage> {
                   );
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => myHome()), // Ganti dengan halaman dashboard yang sesuai
+                    MaterialPageRoute(builder: (context) => myHome()), 
                     (route) => false,
                   );
                 } else {
