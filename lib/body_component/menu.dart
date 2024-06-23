@@ -214,14 +214,14 @@ class _MyMenuState extends State<MyMenu> {
                       child: Row(
                         children: [
                           Text(
-                            'Payment',
+                            'Detail Order',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           SizedBox(width: 8.0),
-                          Icon(Icons.payment),
+                          Icon(Icons.local_drink),
                         ],
                       ),
                     ),

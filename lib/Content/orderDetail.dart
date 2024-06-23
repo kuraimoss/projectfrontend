@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kelompok/Content/paymentPage.dart';
 import 'package:provider/provider.dart';
 import 'package:kelompok/Provider/provider.dart';
 
@@ -115,13 +116,10 @@ class DeliveryPage extends StatelessWidget {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              Provider.of<myProv>(context, listen: false).clearCart();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Order Confirmed!'),
-                ),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => paymentPage()),
               );
-              Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(vertical: 15),
@@ -131,7 +129,7 @@ class DeliveryPage extends StatelessWidget {
               ),
             ),
             child: Center(
-              child: Text('Confirm Delivery Order'),
+              child: Text('Pembayaran'),
             ),
           ),
         ],
@@ -225,7 +223,7 @@ class PickupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return Padding(
+    return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -261,13 +259,10 @@ class PickupPage extends StatelessWidget {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              Provider.of<myProv>(context, listen: false).clearCart();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Order Confirmed!'),
-                ),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => paymentPage()),
               );
-              Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(vertical: 15),
@@ -277,7 +272,7 @@ class PickupPage extends StatelessWidget {
               ),
             ),
             child: Center(
-              child: Text('Confirm Delivery Order'),
+              child: Text('Pembayaran'),
             ),
           ),
         ],
@@ -286,7 +281,7 @@ class PickupPage extends StatelessWidget {
   }
 
   Widget _buildOrderItem(BuildContext context, CartItem item) {
-     return Container(
+    return Container(
       padding: EdgeInsets.all(5),
       margin: EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
