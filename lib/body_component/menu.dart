@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kelompok/Content/detailPage.dart';
+import 'package:kelompok/Content/orderDetail.dart';
+import 'package:provider/provider.dart'; // Import provider package
+import 'package:kelompok/Provider/provider.dart'; // Import provider file
 
 class MyMenu extends StatefulWidget {
   const MyMenu({Key? key}) : super(key: key);
@@ -9,11 +12,25 @@ class MyMenu extends StatefulWidget {
 }
 
 class _MyMenuState extends State<MyMenu> {
-  Map<int, bool> _isFavoriteMap =
-      {}; // Variabel untuk menyimpan status ikon love
+  Map<int, bool> _isFavoriteMap = {};
+  late List<CartItem> _cartItems; // List untuk menyimpan item keranjang
+
+  @override
+  void initState() {
+    super.initState(); // Inisialisasi list kosong untuk item keranjang
+  }
 
   @override
   Widget build(BuildContext context) {
+    // Mengambil instance dari provider MyProv
+    final cartProvider = Provider.of<myProv>(context);
+    _cartItems = cartProvider.cartItems; // Mengambil data dari keranjang
+
+    int totalHarga = 0;
+    _cartItems.forEach((item) {
+      totalHarga += item.price * item.quantity;
+    });
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(150.0),
@@ -54,19 +71,15 @@ class _MyMenuState extends State<MyMenu> {
                           Icon(
                             Icons.location_on,
                             size: 30,
-                            color: Color(0xFF357543), // warna ikon
+                            color: Color(0xFF357543),
                           ),
-                          SizedBox(
-                              width:
-                                  10), // spasi antara ikon dan garis vertikal
+                          SizedBox(width: 10),
                           Container(
-                            width: 1, // lebar garis vertikal
+                            width: 1,
                             height: 30,
                             color: Colors.grey[400],
                           ),
-                          SizedBox(
-                              width:
-                                  10), // spasi antara garis vertikal dan teks
+                          SizedBox(width: 10),
                           Expanded(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -89,9 +102,7 @@ class _MyMenuState extends State<MyMenu> {
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    SizedBox(
-                                        width:
-                                            10), // spasi antara alamat lokasi dan keterangan tambahan
+                                    SizedBox(width: 10),
                                     Text(
                                       'Terdekat',
                                       style: TextStyle(
@@ -113,10 +124,10 @@ class _MyMenuState extends State<MyMenu> {
             ],
           ),
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(2.0), // Atur tinggi garis
+            preferredSize: Size.fromHeight(2.0),
             child: Container(
-              color: Colors.white, // Warna garis
-              height: 2.0, // Tinggi garis
+              color: Colors.white,
+              height: 2.0,
             ),
           ),
         ),
@@ -124,15 +135,12 @@ class _MyMenuState extends State<MyMenu> {
       body: Container(
         decoration: BoxDecoration(
           border: Border(
-            top: BorderSide(
-                width: 1.0, color: Colors.grey), // Garis pemisah atas
-            bottom: BorderSide(
-                width: 1.0, color: Colors.grey), // Garis pemisah bawah
+            top: BorderSide(width: 1.0, color: Colors.grey),
+            bottom: BorderSide(width: 1.0, color: Colors.grey),
           ),
         ),
-        padding: EdgeInsets.symmetric(
-            horizontal: 16.0, vertical: 8.0), // Padding body
-        child: Column(
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: ListView(
           children: [
             Divider(color: Colors.grey, thickness: 1),
             _buildMenuItem(2, 'assets/machiato.jpg', 'Cappucino Latte',
@@ -147,6 +155,82 @@ class _MyMenuState extends State<MyMenu> {
           ],
         ),
       ),
+      floatingActionButton: _cartItems.isNotEmpty
+          ? Container(
+              height: 50,
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 7,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Item ${_cartItems.length}',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Rp $totalHarga',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 16.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => OrderPage()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Payment',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(width: 8.0),
+                          Icon(Icons.payment),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -186,7 +270,7 @@ class _MyMenuState extends State<MyMenu> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    title, // Title
+                    title,
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.bold,
@@ -196,9 +280,7 @@ class _MyMenuState extends State<MyMenu> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                DetailPage()), // Navigasi ke halaman detail
+                        MaterialPageRoute(builder: (context) => DetailPage()),
                       );
                     },
                     child: Text(
@@ -209,7 +291,7 @@ class _MyMenuState extends State<MyMenu> {
                 ],
               ),
               Text(
-                description, // Description
+                description,
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 12.0,
@@ -220,7 +302,7 @@ class _MyMenuState extends State<MyMenu> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    price, // Price
+                    price,
                     style: TextStyle(
                       fontSize: 12.0,
                     ),

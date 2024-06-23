@@ -1,4 +1,22 @@
 import 'package:flutter/material.dart';
+class CartItem {
+  final String name;
+  final int price;
+  final int quantity;
+  final String size;
+  final String iceLevel;
+  final String syrup;
+
+  CartItem({
+    required this.name,
+    required this.price,
+    required this.quantity,
+    required this.size,
+    required this.iceLevel,
+    required this.syrup,
+  });
+}
+
 
 class myProv extends ChangeNotifier {
   int _BNindex = 0;
@@ -10,6 +28,8 @@ class myProv extends ChangeNotifier {
   String _profileImagePath = 'assets/profil.jpg'; // Default profile image path
   bool _isDarkMode = false; // Default dark mode status
   bool _isBannerActive = true;
+  final List<CartItem> _cartItems = [];
+ List<CartItem> get cartItems => _cartItems;
 
   bool get isBannerActive => _isBannerActive;
 
@@ -77,4 +97,18 @@ class myProv extends ChangeNotifier {
     _isBannerActive = false;
     notifyListeners();
   }
-}
+
+  void addToCart(CartItem item) {
+    _cartItems.add(item);
+    notifyListeners();
+  }
+  void removeFromCart(CartItem item) {
+    _cartItems.remove(item);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _cartItems.clear();
+    notifyListeners();
+  }
+} 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kelompok/Provider/provider.dart';
+import 'package:provider/provider.dart'; // Import provider package
 
 class DetailPage extends StatefulWidget {
   const DetailPage({Key? key}) : super(key: key);
@@ -378,11 +380,11 @@ class _DetailPageState extends State<DetailPage> {
             child: Row(
               children: [
                 Container(
-                  width: 35, // sesuaikan dengan ukuran ikon
-                  height: 35, // sesuaikan dengan ukuran ikon
+                  width: 35,
+                  height: 35,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.grey[300], // warna latar belakang bulat
+                    color: Colors.grey[300],
                   ),
                   child: IconButton(
                     onPressed: () {
@@ -392,8 +394,7 @@ class _DetailPageState extends State<DetailPage> {
                         }
                       });
                     },
-                    icon: Icon(Icons.remove,
-                        size: 20), // sesuaikan dengan ukuran ikon
+                    icon: Icon(Icons.remove, size: 20),
                   ),
                 ),
                 SizedBox(
@@ -406,11 +407,11 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                 ),
                 Container(
-                  width: 35, // sesuaikan dengan ukuran ikon
-                  height: 35, // sesuaikan dengan ukuran ikon
+                  width: 35,
+                  height: 35,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xFF107d72), // warna latar belakang bulat
+                    color: Color(0xFF107d72),
                   ),
                   child: IconButton(
                     onPressed: () {
@@ -418,8 +419,7 @@ class _DetailPageState extends State<DetailPage> {
                         _itemCount++;
                       });
                     },
-                    icon: Icon(Icons.add,
-                        size: 20), // sesuaikan dengan ukuran ikon
+                    icon: Icon(Icons.add, size: 20),
                   ),
                 ),
               ],
@@ -430,12 +430,34 @@ class _DetailPageState extends State<DetailPage> {
             right: 14,
             child: ElevatedButton(
               onPressed: () {
-                // Tambahkan logika di sini
+                String size = _isLargeCupSelected ? 'Large' : 'Regular';
+                String iceLevel = _isLessIceSelected
+                    ? 'Less Ice'
+                    : _isNoIceSelected
+                        ? 'No Ice'
+                        : 'Normal Ice';
+                String syrup = _isArenSyrupSelected
+                    ? 'Aren'
+                    : _isVanillaSyrupSelected
+                        ? 'Vanilla'
+                        : 'None';
+
+                CartItem newItem = CartItem(
+                  name: 'Cappuccino Latte',
+                  price: 25000,
+                  quantity: _itemCount,
+                  size: size,
+                  iceLevel: iceLevel,
+                  syrup: syrup,
+                );
+
+                Provider.of<myProv>(context, listen: false).addToCart(newItem);
+
+                Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(15), // Atur border radius di sini
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   backgroundColor: Color(0xFF107d72)),
               child: Text('Add - Rp ${_itemCount * 25000}'),
