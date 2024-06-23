@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart'; // Import provider package
-import 'package:kelompok/Provider/provider.dart'; // Import provider file
+import 'package:provider/provider.dart';
+import 'package:kelompok/Provider/provider.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({super.key});
@@ -15,7 +15,8 @@ class _OrderPageState extends State<OrderPage> {
     final cartProvider = Provider.of<myProv>(context);
     final List<CartItem> _orderItems = cartProvider.cartItems;
 
-    int totalHarga = _orderItems.fold(0, (sum, item) => sum + item.price * item.quantity);
+    int totalHarga =
+        _orderItems.fold(0, (sum, item) => sum + item.price * item.quantity);
 
     return DefaultTabController(
       length: 2,
@@ -54,9 +55,8 @@ class _OrderPageState extends State<OrderPage> {
               Expanded(
                 child: TabBarView(
                   children: [
-                    // Delivery Tab
-                    DeliveryPage(orderItems: _orderItems, totalHarga: totalHarga),
-                    // Pick Up Tab
+                    DeliveryPage(
+                        orderItems: _orderItems, totalHarga: totalHarga),
                     PickupPage(orderItems: _orderItems, totalHarga: totalHarga),
                   ],
                 ),
@@ -73,7 +73,9 @@ class DeliveryPage extends StatelessWidget {
   final List<CartItem> orderItems;
   final int totalHarga;
 
-  const DeliveryPage({Key? key, required this.orderItems, required this.totalHarga}) : super(key: key);
+  const DeliveryPage(
+      {Key? key, required this.orderItems, required this.totalHarga})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -83,41 +85,17 @@ class DeliveryPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Delivery Order Summary',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            'Daftar Pesanan',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 10),
           Expanded(
-            child: ListView.separated(
+            child: ListView.builder(
               itemCount: orderItems.length,
               itemBuilder: (context, index) {
                 final item = orderItems[index];
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${item.name} x${item.quantity}',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            'Size: ${item.size}, Ice: ${item.iceLevel}, Syrup: ${item.syrup}',
-                            style: TextStyle(fontSize: 12, color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      'Rp ${item.price * item.quantity}',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ],
-                );
+                return _buildOrderItem(context, item);
               },
-              separatorBuilder: (context, index) => Divider(),
             ),
           ),
           Divider(),
@@ -126,18 +104,17 @@ class DeliveryPage extends StatelessWidget {
             children: [
               Text(
                 'Total',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               Text(
                 'Rp $totalHarga',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
             ],
           ),
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              // Add your order confirmation logic here
               Provider.of<myProv>(context, listen: false).clearCart();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -161,57 +138,110 @@ class DeliveryPage extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildOrderItem(BuildContext context, CartItem item) {
+    return Container(
+      padding: EdgeInsets.all(5),
+      margin: EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                image: AssetImage('assets/machiato.jpg'), // Example image path
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.name,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Size: ${item.size}, Ice: ${item.iceLevel}, Syrup: ${item.syrup}',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+                Text(
+                  'Rp ${item.price * item.quantity}',
+                  style: TextStyle(fontSize: 18),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: () {
+                        if (item.quantity > 1) {
+                          Provider.of<myProv>(context, listen: false)
+                              .updateCartItemQuantity(item, item.quantity - 1);
+                        }
+                      },
+                    ),
+                    Text(item.quantity.toString()),
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {
+                        Provider.of<myProv>(context, listen: false)
+                            .updateCartItemQuantity(item, item.quantity + 1);
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        Provider.of<myProv>(context, listen: false)
+                            .removeFromCart(item);
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class PickupPage extends StatelessWidget {
   final List<CartItem> orderItems;
   final int totalHarga;
 
-  const PickupPage({Key? key, required this.orderItems, required this.totalHarga}) : super(key: key);
+  const PickupPage(
+      {Key? key, required this.orderItems, required this.totalHarga})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+   return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Pick Up Order Summary',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            'Daftar Pesanan',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 10),
           Expanded(
-            child: ListView.separated(
+            child: ListView.builder(
               itemCount: orderItems.length,
               itemBuilder: (context, index) {
                 final item = orderItems[index];
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${item.name} x${item.quantity}',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            'Size: ${item.size}, Ice: ${item.iceLevel}, Syrup: ${item.syrup}',
-                            style: TextStyle(fontSize: 12, color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      'Rp ${item.price * item.quantity}',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ],
-                );
+                return _buildOrderItem(context, item);
               },
-              separatorBuilder: (context, index) => Divider(),
             ),
           ),
           Divider(),
@@ -220,18 +250,17 @@ class PickupPage extends StatelessWidget {
             children: [
               Text(
                 'Total',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               Text(
                 'Rp $totalHarga',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
             ],
           ),
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              // Add your order confirmation logic here
               Provider.of<myProv>(context, listen: false).clearCart();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -248,7 +277,82 @@ class PickupPage extends StatelessWidget {
               ),
             ),
             child: Center(
-              child: Text('Confirm Pick Up Order'),
+              child: Text('Confirm Delivery Order'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOrderItem(BuildContext context, CartItem item) {
+     return Container(
+      padding: EdgeInsets.all(5),
+      margin: EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                image: AssetImage('assets/machiato.jpg'), // Example image path
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.name,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Size: ${item.size}, Ice: ${item.iceLevel}, Syrup: ${item.syrup}',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+                Text(
+                  'Rp ${item.price * item.quantity}',
+                  style: TextStyle(fontSize: 18),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: () {
+                        if (item.quantity > 1) {
+                          Provider.of<myProv>(context, listen: false)
+                              .updateCartItemQuantity(item, item.quantity - 1);
+                        }
+                      },
+                    ),
+                    Text(item.quantity.toString()),
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {
+                        Provider.of<myProv>(context, listen: false)
+                            .updateCartItemQuantity(item, item.quantity + 1);
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        Provider.of<myProv>(context, listen: false)
+                            .removeFromCart(item);
+                      },
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],

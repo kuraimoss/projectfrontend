@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 class CartItem {
   final String name;
   final int price;
-  final int quantity;
+  int quantity;
   final String size;
   final String iceLevel;
   final String syrup;
@@ -15,8 +16,17 @@ class CartItem {
     required this.iceLevel,
     required this.syrup,
   });
-}
 
+  void increaseQuantity() {
+    quantity++;
+  }
+
+  void decreaseQuantity() {
+    if (quantity > 1) {
+      quantity--;
+    }
+  }
+}
 
 class myProv extends ChangeNotifier {
   int _BNindex = 0;
@@ -29,54 +39,48 @@ class myProv extends ChangeNotifier {
   bool _isDarkMode = false; // Default dark mode status
   bool _isBannerActive = true;
   final List<CartItem> _cartItems = [];
- List<CartItem> get cartItems => _cartItems;
-
-  bool get isBannerActive => _isBannerActive;
 
   int get bnIndex => _BNindex;
   bool get isDarkMode => _isDarkMode;
+  bool get isBannerActive => _isBannerActive;
+  List<CartItem> get cartItems => _cartItems;
+
+  String get name => _name;
+  String get email => _email;
+  String get phoneNumber => _phoneNumber;
+  DateTime get birthDate => _birthDate;
+  String get gender => _gender;
+  String get profileImagePath => _profileImagePath;
 
   set bnIndex(int val) {
     _BNindex = val;
     notifyListeners();
   }
 
-  String get name => _name;
-
   void updateName(String newName) {
     _name = newName;
     notifyListeners();
   }
-
-  String get email => _email;
 
   void updateEmail(String newEmail) {
     _email = newEmail;
     notifyListeners();
   }
 
-  String get phoneNumber => _phoneNumber;
-
   void updatePhoneNumber(String newPhoneNumber) {
     _phoneNumber = newPhoneNumber;
     notifyListeners();
   }
-
-  DateTime get birthDate => _birthDate;
 
   void updateBirthDate(DateTime newDate) {
     _birthDate = newDate;
     notifyListeners();
   }
 
-  String get gender => _gender;
-
   void updateGender(String newGender) {
     _gender = newGender;
     notifyListeners();
   }
-
-  String get profileImagePath => _profileImagePath;
 
   void updateProfileImagePath(String imagePath) {
     _profileImagePath = imagePath;
@@ -102,13 +106,22 @@ class myProv extends ChangeNotifier {
     _cartItems.add(item);
     notifyListeners();
   }
+
   void removeFromCart(CartItem item) {
     _cartItems.remove(item);
     notifyListeners();
+  }
+
+  void updateCartItemQuantity(CartItem item, int newQuantity) {
+    final index = _cartItems.indexOf(item);
+    if (index != -1) {
+      _cartItems[index].quantity = newQuantity;
+      notifyListeners();
+    }
   }
 
   void clearCart() {
     _cartItems.clear();
     notifyListeners();
   }
-} 
+}
