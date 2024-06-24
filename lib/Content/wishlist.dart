@@ -10,9 +10,79 @@ class WishlistPage extends StatelessWidget {
     final wishlistItems = cartProvider.wishlist;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Wishlist'),
-        backgroundColor: Color(0xFF107d72),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(150.0),
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          flexibleSpace: Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.asset(
+                'assets/home.jpg',
+                fit: BoxFit.cover,
+              ),
+              Positioned(
+            top: 30,
+            left: 20,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 25,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white.withOpacity(0.9),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Container(
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.transparent,
+                    ),
+                    child: Transform.scale(
+                      scale: 1,
+                      child: Icon(Icons.arrow_back),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+              Positioned(
+                left: 20,
+                right: 20,
+                bottom: 30,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Wishlist',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                      ),
+                    ),
+                    
+                  ],
+                ),
+              ),
+            ],
+          ),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(2.0),
+            child: Container(
+              color: Colors.white,
+              height: 2.0,
+            ),
+          ),
+        ),
       ),
       body: wishlistItems.isNotEmpty
           ? ListView.builder(
@@ -93,7 +163,7 @@ class WishlistPage extends StatelessWidget {
                                   Expanded(
                                     flex: 4,
                                     child: Text(
-                                      '\$${item.price}',
+                                      '\Rp ${item.price}',
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
