@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:kelompok/Provider/provider.dart';
-import 'package:provider/provider.dart'; // Import provider package
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  final CartItem item;
+
+  const DetailPage({Key? key, required this.item}) : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -12,15 +14,17 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   int _itemCount = 1;
   bool _isLargeCupSelected = false;
-  bool _isRegularCupSelected = false;
+  bool _isRegularCupSelected = true;
   bool _isLessIceSelected = false;
   bool _isNoIceSelected = false;
-  bool _isNormalIceSelected = false;
+  bool _isNormalIceSelected = true;
   bool _isArenSyrupSelected = false;
   bool _isVanillaSyrupSelected = false;
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<myProv>(context);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -42,7 +46,7 @@ class _DetailPageState extends State<DetailPage> {
                       bottomRight: Radius.circular(30.0),
                     ),
                     child: Image.asset(
-                      'assets/machiato.jpg',
+                      widget.item.imagePath,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -91,7 +95,7 @@ class _DetailPageState extends State<DetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Cappuccino Latte',
+                  widget.item.name,
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -102,7 +106,7 @@ class _DetailPageState extends State<DetailPage> {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Text(
-                      'Perpaduan arabica coffee dengan susu karamel',
+                      widget.item.description,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
@@ -112,7 +116,7 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                 ),
                 Text(
-                  'Rp 25.000',
+                  'Rp ${widget.item.price}',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
@@ -277,7 +281,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.750,
+            top: MediaQuery.of(context).size.height * 0.75,
             left: 20,
             right: 20,
             child: Divider(
@@ -286,7 +290,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.77,
+            top: MediaQuery.of(context).size.height * 0.785,
             left: 20,
             child: Row(
               children: [
@@ -297,27 +301,23 @@ class _DetailPageState extends State<DetailPage> {
                     fontWeight: FontWeight.w900,
                   ),
                 ),
-                SizedBox(width: 195),
-                Text(
-                  'Optional , Pilih1',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
               ],
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.80,
+            top: MediaQuery.of(context).size.height * 0.81,
             left: 20,
             child: Row(
               children: [
-                Checkbox(
-                  value: _isArenSyrupSelected,
+                Radio(
+                  value: true,
+                  groupValue: _isArenSyrupSelected,
                   onChanged: (value) {
                     setState(() {
-                      _isArenSyrupSelected = value!;
+                      _isArenSyrupSelected = value as bool;
+                      if (_isArenSyrupSelected) {
+                        _isVanillaSyrupSelected = false;
+                      }
                     });
                   },
                 ),
@@ -326,19 +326,39 @@ class _DetailPageState extends State<DetailPage> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.84,
+            top: MediaQuery.of(context).size.height * 0.855,
             left: 20,
             child: Row(
               children: [
-                Checkbox(
-                  value: _isVanillaSyrupSelected,
+                Radio(
+                  value: true,
+                  groupValue: _isVanillaSyrupSelected,
                   onChanged: (value) {
                     setState(() {
-                      _isVanillaSyrupSelected = value!;
+                      _isVanillaSyrupSelected = value as bool;
+                      if (_isVanillaSyrupSelected) {
+                        _isArenSyrupSelected = false;
+                      }
                     });
                   },
                 ),
-                Text('Vanilla Syrup'),
+                Text('Vanilla'),
+              ],
+            ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.48,
+            right: 20,
+            child: Row(
+              children: [
+                Text(
+                  '+Rp 5.000',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey,
+                  ),
+                ),
               ],
             ),
           ),
@@ -443,24 +463,28 @@ class _DetailPageState extends State<DetailPage> {
                         : 'None';
 
                 CartItem newItem = CartItem(
-                  name: 'Cappuccino Latte',
-                  price: 25000,
+                  id: cartProvider.generateId(),
+                  name: widget.item.name,
+                  price: widget.item.price,
                   quantity: _itemCount,
                   size: size,
                   iceLevel: iceLevel,
                   syrup: syrup,
+                  imagePath: widget.item.imagePath,
+                  description: widget.item.description,
                 );
 
-                Provider.of<myProv>(context, listen: false).addToCart(newItem);
+                cartProvider.addToCart(newItem);
 
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  backgroundColor: Color(0xFF107d72)),
-              child: Text('Add - Rp ${_itemCount * 25000}'),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                backgroundColor: Color(0xFF107d72),
+              ),
+              child: Text('Add - Rp ${_itemCount * widget.item.price}'),
             ),
           ),
         ],

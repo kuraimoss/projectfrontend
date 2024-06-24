@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kelompok/Content/detailPage.dart';
 import 'package:kelompok/Content/orderDetail.dart';
-import 'package:provider/provider.dart'; // Import provider package
-import 'package:kelompok/Provider/provider.dart'; // Import provider file
+import 'package:kelompok/Content/wishlist.dart';
+import 'package:provider/provider.dart';
+import 'package:kelompok/Provider/provider.dart';
 
 class MyMenu extends StatefulWidget {
   const MyMenu({Key? key}) : super(key: key);
@@ -12,19 +13,17 @@ class MyMenu extends StatefulWidget {
 }
 
 class _MyMenuState extends State<MyMenu> {
-  Map<int, bool> _isFavoriteMap = {};
-  late List<CartItem> _cartItems; // List untuk menyimpan item keranjang
+  late List<CartItem> _cartItems;
 
   @override
   void initState() {
-    super.initState(); // Inisialisasi list kosong untuk item keranjang
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Mengambil instance dari provider MyProv
     final cartProvider = Provider.of<myProv>(context);
-    _cartItems = cartProvider.cartItems; // Mengambil data dari keranjang
+    _cartItems = cartProvider.cartItems;
 
     int totalHarga = 0;
     _cartItems.forEach((item) {
@@ -114,18 +113,23 @@ class _MyMenuState extends State<MyMenu> {
                             ),
                           ),
                           RawMaterialButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WishlistPage()),
+                              );
+                            },
                             elevation: 2.0,
                             fillColor: Color(0xFF107d72),
-                            constraints: BoxConstraints.tightFor(
-                                width: 33,
-                                height: 33), // Ukuran keseluruhan button
+                            constraints:
+                                BoxConstraints.tightFor(width: 33, height: 33),
                             shape: CircleBorder(),
                             child: Center(
                               child: Icon(
                                 Icons.favorite,
-                                size: 21.0, // Ukuran ikon favorit
-                                color: Colors.white, // Warna ikon favorit
+                                size: 21.0,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -157,14 +161,24 @@ class _MyMenuState extends State<MyMenu> {
         child: ListView(
           children: [
             Divider(color: Colors.grey, thickness: 1),
-            _buildMenuItem(2, 'assets/machiato.jpg', 'Cappucino Latte',
-                'Perpaduan arabica coffee dengan susu karamel', 'Rp 20.000'),
+            _buildMenuItem(
+                '2',
+                'assets/machiato.jpg',
+                'Cappucino Latte',
+                'Perpaduan arabica coffee dengan susu karamel',
+                'Rp 20.000',
+                cartProvider),
             Divider(color: Colors.grey, thickness: 1),
-            _buildMenuItem(1, 'assets/home2.jpg', 'Coffe Latte',
-                'Perpaduan arabica coffee dengan susu UHT', 'Rp 25.000'),
+            _buildMenuItem(
+                '1',
+                'assets/home2.jpg',
+                'Coffe Latte',
+                'Perpaduan arabica coffee dengan susu UHT',
+                'Rp 25.000',
+                cartProvider),
             Divider(color: Colors.grey, thickness: 1),
-            _buildMenuItem(3, 'assets/home3.jpg', 'Americano Coffee',
-                'Coffe 100% Arabica', 'Rp 15.000'),
+            _buildMenuItem('3', 'assets/home3.jpg', 'Americano Coffee',
+                'Coffe 100% Arabica', 'Rp 15.000', cartProvider),
             Divider(color: Colors.grey, thickness: 1),
           ],
         ),
@@ -248,9 +262,22 @@ class _MyMenuState extends State<MyMenu> {
     );
   }
 
-  Widget _buildMenuItem(int id, String imagePath, String title,
-      String description, String price) {
-    bool isFavorite = _isFavoriteMap[id] ?? false;
+  Widget _buildMenuItem(String id, String imagePath, String title,
+      String description, String price, myProv cartProvider) {
+    bool isFavorite = cartProvider.isInWishlist(id);
+
+    CartItem item = CartItem(
+      id: cartProvider.generateId(),
+      name: title,
+      price: int.parse(price.replaceAll(RegExp(r'\D'), '')),
+      quantity: 1,
+      size: 'Regular',
+      iceLevel: 'Normal',
+      syrup: 'None',
+      imagePath: imagePath,
+      description: description,
+    );
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -274,7 +301,7 @@ class _MyMenuState extends State<MyMenu> {
           height: 80,
           color: Colors.grey[400],
         ),
-        SizedBox(width: 10),
+        SizedBox(width: 16),
         Expanded(
           flex: 3,
           child: Column(
@@ -294,7 +321,9 @@ class _MyMenuState extends State<MyMenu> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => DetailPage()),
+                        MaterialPageRoute(
+                          builder: (context) => DetailPage(item: item),
+                        ),
                       );
                     },
                     child: Text(
@@ -308,30 +337,41 @@ class _MyMenuState extends State<MyMenu> {
                 description,
                 style: TextStyle(
                   color: Colors.grey,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    price,
-                    style: TextStyle(
-                      fontSize: 12.0,
+                  Expanded(
+                    flex: 4,
+                    child: Text(
+                      price,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green[800],
+                      ),
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? Colors.red : Colors.green,
+                  SizedBox(width: 100,),
+                  Expanded(
+                    flex: 2,
+                    child: IconButton(
+                      icon: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: isFavorite ? Colors.red : null,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          if (isFavorite) {
+                            cartProvider.removeFromWishlist(id);
+                          } else {
+                            cartProvider.addToWishlist(id);
+                          }
+                        });
+                      },
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _isFavoriteMap[id] = !isFavorite;
-                      });
-                    },
-                  ),
+                  )
                 ],
               ),
             ],
