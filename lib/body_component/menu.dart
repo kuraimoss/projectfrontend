@@ -64,8 +64,6 @@ class _MyMenuState extends State<MyMenu> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(width: 10),
                           Icon(
@@ -113,6 +111,22 @@ class _MyMenuState extends State<MyMenu> {
                                   ],
                                 ),
                               ],
+                            ),
+                          ),
+                          RawMaterialButton(
+                            onPressed: () {},
+                            elevation: 2.0,
+                            fillColor: Color(0xFF107d72),
+                            constraints: BoxConstraints.tightFor(
+                                width: 33,
+                                height: 33), // Ukuran keseluruhan button
+                            shape: CircleBorder(),
+                            child: Center(
+                              child: Icon(
+                                Icons.favorite,
+                                size: 21.0, // Ukuran ikon favorit
+                                color: Colors.white, // Warna ikon favorit
+                              ),
                             ),
                           ),
                         ],

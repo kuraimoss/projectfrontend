@@ -13,26 +13,41 @@ class _paymentPageState extends State<paymentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Payment Page'),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
+            Center(
+              child: Container(
+                width: 50,
+                height: 3,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(2.5),
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
             Text(
               'Pilih Metode Pembayaran',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            Divider(thickness: 1.5),
             _buildPaymentOption('assets/tunai.png', 'Tunai', 'tunai'),
             _buildPaymentOption('assets/dana.jpg', 'Dana', 'dana'),
             _buildPaymentOption('assets/shopee.png', 'Shopeepay', 'shopeepay'),
             _buildPaymentOption('assets/gopay.png', 'GoPay', 'gopay'),
             _buildPaymentOption('assets/ovo.png', 'OVO', 'ovo'),
-            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 if (_selectedPaymentMethod != null) {
@@ -40,12 +55,13 @@ class _paymentPageState extends State<paymentPage> {
                   Provider.of<myProv>(context, listen: false).clearCart();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Pembayaran $_selectedPaymentMethod berhasil!'),
+                      content:
+                          Text('Pembayaran $_selectedPaymentMethod berhasil!'),
                     ),
                   );
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => myHome()), 
+                    MaterialPageRoute(builder: (context) => myHome()),
                     (route) => false,
                   );
                 } else {

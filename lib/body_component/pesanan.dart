@@ -213,12 +213,32 @@ class _PesananPageState extends State<PesananPage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                price, // Harga
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    price, // Harga
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  PopupMenuButton<String>(
+                    onSelected: (String value) {
+                      // Handle menu item selection
+                      print(value);
+                    },
+                    itemBuilder: (BuildContext context) {
+                      return {'Chat Kuraashop', 'Bantuan'}
+                          .map((String choice) {
+                        return PopupMenuItem<String>(
+                          value: choice,
+                          child: Text(choice),
+                        );
+                      }).toList();
+                    },
+                  ),
+                ],
               ),
               SizedBox(height: 40),
               Text(
@@ -372,12 +392,32 @@ class _PesananPageState extends State<PesananPage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                price, // Harga
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    price, // Harga
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  PopupMenuButton<String>(
+                    onSelected: (String value) {
+                      // Handle menu item selection
+                      print(value);
+                    },
+                    itemBuilder: (BuildContext context) {
+                      return {'Chat Kuraashop', 'Bantuan'}
+                          .map((String choice) {
+                        return PopupMenuItem<String>(
+                          value: choice,
+                          child: Text(choice),
+                        );
+                      }).toList();
+                    },
+                  ),
+                ],
               ),
               SizedBox(height: 40),
               Text(

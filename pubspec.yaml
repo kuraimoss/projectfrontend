@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   assets: ^0.0.1
+  flaticon_downloader: ^0.0.2
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
@@ -46,8 +47,3 @@ flutter:
     - assets/ovo.png
     - assets/tunai.png
     - assets/shopee.png
-
-
-
-
-

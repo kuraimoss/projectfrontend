@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kelompok/Content/paymentPage.dart';
-import 'package:provider/provider.dart';
 import 'package:kelompok/Provider/provider.dart';
+import 'package:provider/provider.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({super.key});
@@ -62,6 +62,7 @@ class _OrderPageState extends State<OrderPage> {
                   ],
                 ),
               ),
+              SizedBox(height: 20),
             ],
           ),
         ),
@@ -99,6 +100,79 @@ class DeliveryPage extends StatelessWidget {
               },
             ),
           ),
+          Row(
+            children: [
+              Text(
+                'Ringkasan Pembayaran',
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+              ),
+              IconButton(
+                icon: Icon(Icons.info_outline),
+                iconSize: 17,
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Container(
+                                width: 50,
+                                height: 3,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(2.5),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              'Ringkasan Pembayaran',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            Divider(thickness: 1.5),
+                            SizedBox(height: 10),
+                            Text(
+                              'Instruksi Pembayaran:',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text('1. Pilih metode pembayaran yang diinginkan.'),
+                            Text('2. Klik tombol "Konfirmasi".'),
+                            Text(
+                                '3. Ikuti petunjuk lebih lanjut sesuai dengan metode pembayaran yang dipilih.'),
+                            SizedBox(height: 10),
+                            Text(
+                              'Catatan:',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                                '1. Pastikan untuk memeriksa ulang informasi pembayaran sebelum melakukan transaksi.'),
+                            Text(
+                                '2. Simpan bukti pembayaran untuk referensi di masa depan.'),
+                            SizedBox(height: 10),
+                            Text(
+                              'Bantuan:',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                                'Jika mengalami kesulitan atau ada pertanyaan, hubungi layanan pelanggan kami di 123-456-789 atau email support@kura.com.'),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
           Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,9 +190,11 @@ class DeliveryPage extends StatelessWidget {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => paymentPage()),
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return paymentPage();
+                },
               );
             },
             style: ElevatedButton.styleFrom(
@@ -242,6 +318,79 @@ class PickupPage extends StatelessWidget {
               },
             ),
           ),
+          Row(
+            children: [
+              Text(
+                'Ringkasan Pembayaran',
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+              ),
+              IconButton(
+                icon: Icon(Icons.info_outline),
+                iconSize: 17,
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Container(
+                                width: 50,
+                                height: 3,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(2.5),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              'Ringkasan Pembayaran',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            Divider(thickness: 1.5),
+                            SizedBox(height: 10),
+                            Text(
+                              'Instruksi Pembayaran:',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text('1. Pilih metode pembayaran yang diinginkan.'),
+                            Text('2. Klik tombol "Konfirmasi".'),
+                            Text(
+                                '3. Ikuti petunjuk lebih lanjut sesuai dengan metode pembayaran yang dipilih.'),
+                            SizedBox(height: 10),
+                            Text(
+                              'Catatan:',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                                '1. Pastikan untuk memeriksa ulang informasi pembayaran sebelum melakukan transaksi.'),
+                            Text(
+                                '2. Simpan bukti pembayaran untuk referensi di masa depan.'),
+                            SizedBox(height: 10),
+                            Text(
+                              'Bantuan:',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                                'Jika mengalami kesulitan atau ada pertanyaan, hubungi layanan pelanggan kami di 123-456-789 atau email support@kura.com.'),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
           Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -259,9 +408,11 @@ class PickupPage extends StatelessWidget {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => paymentPage()),
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return paymentPage();
+                },
               );
             },
             style: ElevatedButton.styleFrom(
