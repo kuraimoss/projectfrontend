@@ -7,10 +7,11 @@ class packageFab extends StatefulWidget {
   State<packageFab> createState() => _packageFabState();
 }
 
-class _packageFabState extends State<packageFab> {
+class _packageFabState extends State<packageFab>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   bool isExpandedCaraPakai = false;
   bool isExpandedSyaratKetentuan = false;
-  int currentPage = 0;
 
   final List<Map<String, String>> packages = [
     {
@@ -36,9 +37,17 @@ class _packageFabState extends State<packageFab> {
     },
   ];
 
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: packages.length, vsync: this);
+    _tabController.addListener(() {
+      setState(() {}); // Update UI when the tab changes
+    });
+  }
+
   Widget buildPackage(Map<String, String> package) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      margin: EdgeInsets.symmetric(horizontal: 30),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -351,7 +360,7 @@ class _packageFabState extends State<packageFab> {
                       constraints: BoxConstraints(maxHeight: 100),
                       child: SingleChildScrollView(
                         child: Text(
-                          'Teks untuk cara pakai voucher yang panjang... ',
+                          'Teks untuk cara pakai voucher yang panjang...',
                           style: TextStyle(
                             fontSize: 11,
                             color: Colors.black,
@@ -408,35 +417,22 @@ class _packageFabState extends State<packageFab> {
     );
   }
 
-  Widget buildIndicator() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        packages.length,
-        (index) => Container(
-          margin: EdgeInsets.symmetric(horizontal: 4.0),
-          width: currentPage == index ? 10.0 : 8.0,
-          height: currentPage == index ? 10.0 : 8.0,
-          decoration: BoxDecoration(
-            color: currentPage == index ? Colors.white : Colors.grey,
-            shape: BoxShape.circle,
-          ),
-        ),
-      ),
-    );
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF107d72),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Color(0xFF107d72),
+            color: Colors.white,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -450,82 +446,44 @@ class _packageFabState extends State<packageFab> {
           ),
         ),
         centerTitle: true,
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: Color(0xFF107d72),
+          labelColor: Colors.black,
+          labelStyle: TextStyle(fontSize: 12.5),
+          tabs:
+              packages.map((package) => Tab(text: package['title']!)).toList(),
+        ),
       ),
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 100,
-            child: Container(
-              color: Color(0xFF107d72),
+      body: TabBarView(
+        controller: _tabController,
+        children: packages.map((package) => buildPackage(package)).toList(),
+      ),
+      bottomNavigationBar: Container(
+        height: 65,
+        color: Colors.white,
+        padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 50),
+        child: ElevatedButton(
+          onPressed: () {
+            // Tambahkan logika pembelian paket di sini
+          },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+              Color(0xFF107d72),
             ),
-          ),
-          Positioned(
-            top: 320,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              color: Colors.white,
+            foregroundColor: MaterialStateProperty.all<Color>(
+              Colors.white,
             ),
-          ),
-          Positioned(
-            top: 120,
-            left: 0,
-            right: 0,
-            child: buildIndicator(),
-          ),
-          Positioned(
-            top: 150,
-            left: 10,
-            right: 10,
-            height: 500,
-            child: PageView.builder(
-              onPageChanged: (index) {
-                setState(() {
-                  currentPage = index;
-                });
-              },
-              itemCount: packages.length,
-              itemBuilder: (context, index) {
-                return buildPackage(packages[index]);
-              },
-            ),
-          ),
-          Positioned(
-            top: 680,
-            left: 50,
-            right: 50,
-            child: ElevatedButton(
-              onPressed: () {
-                // Tambahkan logika pembelian paket di sini
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  Color(0xFF107d72),
-                ),
-                foregroundColor: MaterialStateProperty.all<Color>(
-                  Colors.white,
-                ),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                ),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
               ),
-              child: Text('Beli Paket - ${packages[currentPage]['price']}'),
             ),
           ),
-        ],
+          child:
+              Text('Beli Paket - ${packages[_tabController.index]['price']}'),
+        ),
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: packageFab(),
-  ));
 }

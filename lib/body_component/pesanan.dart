@@ -207,7 +207,7 @@ class _PesananPageState extends State<PesananPage>
             ],
           ),
         ),
-        SizedBox(width: 16), // Jarak antara kolom
+        SizedBox(width: 16),
         Expanded(
           flex: 1,
           child: Column(
@@ -217,7 +217,7 @@ class _PesananPageState extends State<PesananPage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    price, // Harga
+                    price,
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -225,12 +225,10 @@ class _PesananPageState extends State<PesananPage>
                   ),
                   PopupMenuButton<String>(
                     onSelected: (String value) {
-                      // Handle menu item selection
                       print(value);
                     },
                     itemBuilder: (BuildContext context) {
-                      return {'Chat Kuraashop', 'Bantuan'}
-                          .map((String choice) {
+                      return {'Chat Kuraashop', 'Bantuan'}.map((String choice) {
                         return PopupMenuItem<String>(
                           value: choice,
                           child: Text(choice),
@@ -408,8 +406,7 @@ class _PesananPageState extends State<PesananPage>
                       print(value);
                     },
                     itemBuilder: (BuildContext context) {
-                      return {'Chat Kuraashop', 'Bantuan'}
-                          .map((String choice) {
+                      return {'Chat Kuraashop', 'Bantuan'}.map((String choice) {
                         return PopupMenuItem<String>(
                           value: choice,
                           child: Text(choice),

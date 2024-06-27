@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kelompok/Activity/createnewpswd.dart';
-import 'package:kelompok/Activity/daftar.dart';
 import 'package:kelompok/Activity/dashboard.dart';
-import 'package:kelompok/Activity/home.dart';
-import 'package:kelompok/Activity/login.dart';
-import 'package:kelompok/Activity/resetpw.dart';
-import 'package:kelompok/Activity/verify.dart';
-import 'package:kelompok/Content/detailPage.dart';
+import 'package:kelompok/Content/packagefab.dart';
 import 'package:kelompok/Provider/provider.dart';
-import 'package:kelompok/body_component/menu.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -33,6 +26,6 @@ class MainApp extends StatelessWidget {
         themeMode: Provider.of<myProv>(context).isDarkMode
             ? ThemeMode.dark
             : ThemeMode.light,
-        home: Myhome());
+        home: myHome());
   }
 }
