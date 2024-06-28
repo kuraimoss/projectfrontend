@@ -22,39 +22,39 @@ class WishlistPage extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
               Positioned(
-            top: 30,
-            left: 20,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  width: 25,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white.withOpacity(0.9),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: Container(
-                    padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.transparent,
+                top: 30,
+                left: 20,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: 25,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withOpacity(0.9),
+                      ),
                     ),
-                    child: Transform.scale(
-                      scale: 1,
-                      child: Icon(Icons.arrow_back),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: Container(
+                        padding: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.transparent,
+                        ),
+                        child: Transform.scale(
+                          scale: 1,
+                          child: Icon(Icons.arrow_back),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
               Positioned(
                 left: 20,
                 right: 20,
@@ -69,7 +69,6 @@ class WishlistPage extends StatelessWidget {
                         fontSize: 30,
                       ),
                     ),
-                    
                   ],
                 ),
               ),
@@ -126,7 +125,8 @@ class WishlistPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     item.name,
@@ -140,7 +140,8 @@ class WishlistPage extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => DetailPage(item: item),
+                                          builder: (context) =>
+                                              DetailPage(item: item),
                                         ),
                                       );
                                     },
@@ -176,12 +177,15 @@ class WishlistPage extends StatelessWidget {
                                     flex: 2,
                                     child: IconButton(
                                       icon: Icon(
-                                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                                        isFavorite
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
                                         color: isFavorite ? Colors.red : null,
                                       ),
                                       onPressed: () {
                                         if (isFavorite) {
-                                          cartProvider.removeFromWishlist(itemId);
+                                          cartProvider
+                                              .removeFromWishlist(itemId);
                                         } else {
                                           cartProvider.addToWishlist(itemId);
                                         }
@@ -209,8 +213,6 @@ class WishlistPage extends StatelessWidget {
   }
 
   CartItem _getMenuItemById(String id) {
-    // Replace this with your actual data fetching logic
-    // Example static data:
     final menuItems = [
       CartItem(
         id: '1',
@@ -250,4 +252,3 @@ class WishlistPage extends StatelessWidget {
     return menuItems.firstWhere((item) => item.id == id);
   }
 }
-

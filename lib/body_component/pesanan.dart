@@ -65,10 +65,10 @@ class _PesananPageState extends State<PesananPage>
             ],
           ),
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(2.0), // Atur tinggi garis
+            preferredSize: Size.fromHeight(2.0),
             child: Container(
-              color: Colors.white, // Warna garis
-              height: 2.0, // Tinggi garis
+              color: Colors.white,
+              height: 2.0,
             ),
           ),
         ),
@@ -240,7 +240,7 @@ class _PesananPageState extends State<PesananPage>
               ),
               SizedBox(height: 40),
               Text(
-                dateTime, // Tanggal dan waktu
+                dateTime,
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -301,11 +301,11 @@ class _PesananPageState extends State<PesananPage>
       case 'Selesai':
         iconData = Icons.check_circle;
         break;
-      case 'Dibatalkan': // Add more cases if needed for different icons
+      case 'Dibatalkan':
         iconData = Icons.cancel;
         break;
       default:
-        iconData = Icons.check_circle; // Default to a sensible icon
+        iconData = Icons.check_circle;
     }
 
     return Row(
@@ -344,7 +344,7 @@ class _PesananPageState extends State<PesananPage>
                   Row(
                     children: [
                       Icon(
-                        iconData, // Use the dynamically determined iconData
+                        iconData,
                         color: Colors.black,
                         size: 13,
                       ),
@@ -384,7 +384,7 @@ class _PesananPageState extends State<PesananPage>
             ],
           ),
         ),
-        SizedBox(width: 16), // Jarak antara kolom
+        SizedBox(width: 16),
         Expanded(
           flex: 1,
           child: Column(
@@ -394,7 +394,7 @@ class _PesananPageState extends State<PesananPage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    price, // Harga
+                    price,
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -402,7 +402,6 @@ class _PesananPageState extends State<PesananPage>
                   ),
                   PopupMenuButton<String>(
                     onSelected: (String value) {
-                      // Handle menu item selection
                       print(value);
                     },
                     itemBuilder: (BuildContext context) {
@@ -418,7 +417,7 @@ class _PesananPageState extends State<PesananPage>
               ),
               SizedBox(height: 40),
               Text(
-                dateTime, // Tanggal dan waktu
+                dateTime,
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,

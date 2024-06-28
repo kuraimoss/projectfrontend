@@ -89,9 +89,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               ],
             ),
             TextButton(
-              onPressed: () {
-                // Handle "Try another way" button
-              },
+              onPressed: () {},
               child: Text('Send Code Again'),
             ),
           ],

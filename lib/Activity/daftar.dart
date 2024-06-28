@@ -8,10 +8,8 @@ class DaftarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double imageWidth =
-        screenWidth * 0.6; // Misalnya, 60% dari lebar layar
-    final double aspectRatio =
-        16 / 9; // Sesuaikan aspek rasio gambar sesuai kebutuhan
+    final double imageWidth = screenWidth * 0.6;
+    final double aspectRatio = 16 / 9;
     final double imageHeight = imageWidth / aspectRatio;
 
     return Scaffold(

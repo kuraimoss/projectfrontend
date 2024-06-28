@@ -14,7 +14,12 @@ class myHome extends StatefulWidget {
 }
 
 class _myHomeState extends State<myHome> {
-  final List<Widget> _body = [HalSecond(), MyMenu(), PesananPage(), MyProfile()];
+  final List<Widget> _body = [
+    HalSecond(),
+    MyMenu(),
+    PesananPage(),
+    MyProfile()
+  ];
   late PageController _pageController;
 
   @override
@@ -36,9 +41,9 @@ class _myHomeState extends State<myHome> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: provider.bnIndex,
-        selectedItemColor: Color(0xFF107d72), // Warna ikon ketika dipilih
-        unselectedItemColor: Colors.grey, // Warna ikon ketika tidak dipilih
-        showUnselectedLabels: true, // Tetap tampilkan label walaupun tidak dipilih
+        selectedItemColor: Color(0xFF107d72),
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
         onTap: (value) {
           provider.bnIndex = value;
           _pageController.animateToPage(value,
@@ -46,13 +51,13 @@ class _myHomeState extends State<myHome> {
         },
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.restaurant_menu), label: "Menu"),
-          BottomNavigationBarItem(icon: Icon(Icons.date_range_sharp), label: "Pesanan"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.restaurant_menu), label: "Menu"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.date_range_sharp), label: "Pesanan"),
           BottomNavigationBarItem(icon: Icon(Icons.person_2), label: "Profile"),
         ],
-        // Gaya teks ketika dipilih
-        unselectedLabelStyle:
-            TextStyle(color: Colors.grey), // Gaya teks ketika tidak dipilih
+        unselectedLabelStyle: TextStyle(color: Colors.grey),
       ),
       body: PageView(
         children: _body,

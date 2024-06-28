@@ -16,7 +16,6 @@ class NotifikasiPage extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
-                  // Aksi saat tombol kembali ditekan
                   Navigator.of(context).pop();
                 },
               ),
@@ -27,23 +26,19 @@ class NotifikasiPage extends StatelessWidget {
                   fontSize: 18.0,
                 ),
               ),
-              SizedBox(
-                  width:
-                      48.0), // Spacer untuk menjaga jarak antara teks "INBOX" dan ikon
+              SizedBox(width: 48.0),
             ],
           ),
           SizedBox(height: 8.0),
           Expanded(
             child: ListView.separated(
-              itemCount: 10, // Jumlah pesan dalam daftar
+              itemCount: 10,
               itemBuilder: (BuildContext context, int index) {
-                // Contoh data pesan
                 String sender = index.isEven ? 'John' : 'Jane';
-                bool isMe = index.isEven; // Jika pesan dari saya
+                bool isMe = index.isEven;
 
                 return ListTile(
-                  contentPadding: EdgeInsets.symmetric(
-                      horizontal: 16.0), // Padding untuk konten
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -79,23 +74,22 @@ class NotifikasiPage extends StatelessWidget {
                     ],
                   ),
                   trailing: Text(
-                    '05 Mei 2024, 10.00', // Tanggal dan waktu pengiriman pesan
+                    '05 Mei 2024, 10.00',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 12.0,
                     ),
                   ),
                   onTap: () {
-                    // Aksi saat pesan ditekan
                     print('Pesan dari $sender ditekan');
-                    // Menampilkan dialog konfirmasi saat pesan ditekan
+
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: Text('Delete Message'),
-                          content:
-                              Text('Are you sure you want to delete this message?'),
+                          content: Text(
+                              'Are you sure you want to delete this message?'),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
@@ -105,7 +99,6 @@ class NotifikasiPage extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: () {
-  
                                 Navigator.of(context).pop(true);
                               },
                               child: Text('Delete'),
@@ -115,11 +108,11 @@ class NotifikasiPage extends StatelessWidget {
                       },
                     );
                   },
-                  selected: isMe, // Pesan dari saya ditandai
+                  selected: isMe,
                 );
               },
               separatorBuilder: (BuildContext context, int index) =>
-                  Divider(height: 1), // Garis pemisah antar pesan
+                  Divider(height: 1),
             ),
           ),
         ],

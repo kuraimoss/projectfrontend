@@ -5,7 +5,8 @@ class CreateNewPasswordScreen extends StatefulWidget {
   const CreateNewPasswordScreen({Key? key}) : super(key: key);
 
   @override
-  State<CreateNewPasswordScreen> createState() => _CreateNewPasswordScreenState();
+  State<CreateNewPasswordScreen> createState() =>
+      _CreateNewPasswordScreenState();
 }
 
 class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
@@ -24,10 +25,6 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
         _errorMessage = 'Passwords do not match.';
       });
     } else {
-      // Passwords match, proceed with saving
-      // Add your saving logic here
-
-      // After saving, navigate to login screen
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginPage()),

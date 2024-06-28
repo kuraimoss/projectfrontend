@@ -229,7 +229,7 @@ class DeliveryPage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
-                image: AssetImage('assets/machiato.jpg'), // Example image path
+                image: AssetImage('assets/machiato.jpg'),
                 fit: BoxFit.contain,
               ),
             ),
@@ -447,7 +447,7 @@ class PickupPage extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
-                image: AssetImage('assets/machiato.jpg'), // Example image path
+                image: AssetImage('assets/machiato.jpg'), 
                 fit: BoxFit.contain,
               ),
             ),

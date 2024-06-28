@@ -41,7 +41,7 @@ class _packageFabState extends State<packageFab>
     super.initState();
     _tabController = TabController(length: packages.length, vsync: this);
     _tabController.addListener(() {
-      setState(() {}); // Update UI when the tab changes
+      setState(() {});
     });
   }
 
@@ -285,19 +285,18 @@ class _packageFabState extends State<packageFab>
               height: 35,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Color(0xFFd9d9d9), // Warna teks di dalam rectangle
-                borderRadius: BorderRadius.circular(12), // Rounded
+                color: Color(0xFFd9d9d9),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(width: 12), // Spasi antara ikon dan teks
-
+                  SizedBox(width: 12),
                   Icon(
-                    Icons.info, // Ganti 'icon' dengan ikon yang sesuai
+                    Icons.info,
                     color: Colors.black,
                   ),
-                  SizedBox(width: 8), // Spasi antara ikon dan teks
+                  SizedBox(width: 8),
                   Expanded(
                     child: RichText(
                       text: TextSpan(
@@ -309,7 +308,7 @@ class _packageFabState extends State<packageFab>
                           TextSpan(
                             text: 'Berlaku sekali pembelian dalam 1 periode',
                             style: TextStyle(
-                                color: Color(0xFF107d72), // Warna Rp 60.000
+                                color: Color(0xFF107d72),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12),
                           ),
@@ -464,9 +463,7 @@ class _packageFabState extends State<packageFab>
         color: Colors.white,
         padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 50),
         child: ElevatedButton(
-          onPressed: () {
-            // Tambahkan logika pembelian paket di sini
-          },
+          onPressed: () {},
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
               Color(0xFF107d72),

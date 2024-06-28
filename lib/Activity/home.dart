@@ -8,8 +8,7 @@ class Myhome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double imageWidth =
-        screenWidth * 0.9; // Misalnya, 60% dari lebar layar
+    final double imageWidth = screenWidth * 0.9;
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(15.0),

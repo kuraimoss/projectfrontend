@@ -73,27 +73,23 @@ class _MyProfileState extends State<MyProfile> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: () {
-                        // Tambahkan logika logout di sini
-                      },
+                      onPressed: () {},
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Color(0xFF107d72)), // Warna latar belakang tombol
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            Colors.white), // Warna teks tombol
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Color(0xFF107d72)),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
                       ),
                       child: Text('Logout'),
                     ),
                     SizedBox(width: 20),
                     ElevatedButton(
-                      onPressed: () {
-                        // Tambahkan logika hapus akun di sini
-                      },
+                      onPressed: () {},
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Colors.red), // Warna latar belakang tombol
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            Colors.white), // Warna teks tombol
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.red),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
                       ),
                       child: Text('Hapus Akun'),
                     ),
@@ -172,7 +168,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController _phoneNumberController = TextEditingController();
   String _selectedGender = '';
   DateTime _selectedDate = DateTime.now();
-  File? _image; // Variable to store selected image
+  File? _image;
 
   @override
   void initState() {
@@ -187,8 +183,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final profileProvider = Provider.of<myProv>(context,
-        listen: false); // Deklarasikan di dalam build
+    final profileProvider = Provider.of<myProv>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -214,8 +209,8 @@ class _EditProfileState extends State<EditProfile> {
                     onTap: _getImage,
                     child: Row(
                       children: [
-                        Icon(Icons.camera_alt), // Tambahkan ikon di sini
-                        SizedBox(width: 10), // Beri jarak antara ikon dan teks
+                        Icon(Icons.camera_alt),
+                        SizedBox(width: 10),
                         Text(
                           'Change Profile Picture',
                         ),
@@ -292,16 +287,16 @@ class _EditProfileState extends State<EditProfile> {
                 profileProvider.updatePhoneNumber(_phoneNumberController.text);
                 profileProvider.updateGender(_selectedGender);
                 profileProvider.updateBirthDate(_selectedDate);
-                // Tambahkan pembaruan path gambar profil jika diperlukan
+
                 if (_image != null) {
                   profileProvider.updateProfileImagePath(_image!.path);
                 }
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Your profile has been successfully edited'),
-                    duration: Duration(seconds: 2),
-                    backgroundColor: Color(0xFF107d72)
-                  ),
+                      content:
+                          Text('Your profile has been successfully edited'),
+                      duration: Duration(seconds: 2),
+                      backgroundColor: Color(0xFF107d72)),
                 );
                 Navigator.pop(context);
               },
@@ -322,20 +317,16 @@ class _EditProfileState extends State<EditProfile> {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
 
-        // Perbarui path gambar profil di provider nya
         final profileProvider = Provider.of<myProv>(context, listen: false);
         profileProvider.updateProfileImagePath(pickedFile.path);
       } else {
-        // Jika pengguna tidak memilih gambar, gunakan gambar profil default dari provider
         final profileProvider = Provider.of<myProv>(context, listen: false);
         String defaultImagePath = profileProvider.profileImagePath;
 
         if (defaultImagePath == 'assets/profil.jpg' ||
             defaultImagePath.isEmpty) {
-          // Jika path gambar profil default tidak diatur atau kosong, gunakan gambar default bawaan aplikasi
-          _image = null; // Atur gambar menjadi null
+          _image = null;
         } else {
-          // Jika path gambar profil default tersedia di provider, gunakan itu
           _image = File(defaultImagePath);
         }
       }

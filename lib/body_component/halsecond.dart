@@ -77,7 +77,6 @@ class _HalSecondState extends State<HalSecond> {
                 bottom: 100.0,
                 child: GestureDetector(
                   onTap: () {
-                    // Navigasi ke halaman notifikasi
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => NotifikasiPage()),
@@ -151,8 +150,7 @@ class _HalSecondState extends State<HalSecond> {
                   return Stack(
                     children: [
                       FlatBanners(
-                        imageWidth:
-                            80, // Adjusted width to match your earlier code
+                        imageWidth: 80,
                         gradientColors: [
                           const Color(0xFF107d72).withOpacity(0.9),
                           const Color(0xFFa1f0b3).withOpacity(0.8),
@@ -161,7 +159,7 @@ class _HalSecondState extends State<HalSecond> {
                         subtitle: 'Package Bundling!',
                         btnText: 'GO TO',
                         actionBtnBgColor: Color(0xFF107d72),
-                        image: 'assets/banner.png', // Your image asset path
+                        image: 'assets/banner.png',
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -171,7 +169,7 @@ class _HalSecondState extends State<HalSecond> {
                         },
                       ),
                       Positioned(
-                        right: 1.0, // Adjust position as needed
+                        right: 1.0,
                         child: IconButton(
                           icon: Icon(Icons.close, color: Colors.black),
                           onPressed: () {
@@ -182,7 +180,7 @@ class _HalSecondState extends State<HalSecond> {
                     ],
                   );
                 } else {
-                  return Container(); // Return an empty container if showBanner is false
+                  return Container();
                 }
               },
             ),
