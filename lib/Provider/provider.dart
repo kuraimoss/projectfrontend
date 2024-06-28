@@ -44,14 +44,14 @@ class myProv extends ChangeNotifier {
   DateTime _birthDate = DateTime(2000, 1, 1); // Default birth date
   String _gender = 'Male'; // Default gender
   String _profileImagePath = 'assets/profil.jpg'; // Default profile image path
-  bool _isDarkMode = false; // Default dark mode status
-  bool _isBannerActive = true;
+  bool _isDarkMode = false; // Default dark mode status;
+  bool _showBanner = true; // Default banner status
   final List<CartItem> _cartItems = [];
   final List<String> _wishlist = []; // Ubah tipe data wishlist ke List<String>
 
   int get bnIndex => _BNindex;
   bool get isDarkMode => _isDarkMode;
-  bool get isBannerActive => _isBannerActive;
+  bool get showBanner => _showBanner; // Tambahkan getter untuk showBanner
   List<CartItem> get cartItems => _cartItems;
   List<String> get wishlist => _wishlist;
 
@@ -106,13 +106,8 @@ class myProv extends ChangeNotifier {
     notifyListeners();
   }
 
-  void showBanner() {
-    _isBannerActive = true;
-    notifyListeners();
-  }
-
-  void hideBanner() {
-    _isBannerActive = false;
+  void setShowBanner(bool value) {
+    _showBanner = value;
     notifyListeners();
   }
 

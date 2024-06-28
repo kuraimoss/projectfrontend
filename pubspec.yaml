@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   assets: ^0.0.1
+  flat_banners: ^0.0.6
   flaticon_downloader: ^0.0.2
   flutter:
     sdk: flutter
@@ -42,7 +43,7 @@ flutter:
     - assets/home3.jpg
     - assets/machiato.jpg
     - assets/fab.jpg
-    - assets/banner.jpg
+    - assets/banner.png
     - assets/dana.jpg
     - assets/gopay.png
     - assets/ovo.png

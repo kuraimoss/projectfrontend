@@ -153,6 +153,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  flat_banners:
+    dependency: "direct main"
+    description:
+      name: flat_banners
+      sha256: "15d17446603d0e850f182b287a88340394b092a8f608c0f507595f4f9d1a2958"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   flaticon_downloader:
     dependency: "direct main"
     description:
